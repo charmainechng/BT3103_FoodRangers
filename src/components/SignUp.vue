@@ -3,7 +3,7 @@
     <img src="../assets/earth.png" class="image1" />
 
     <form class="inner-block vertical-center">
-      <h1><img src="../assets/foodranger.png" class= "image2"></h1>
+      <h1><img src="../assets/foodranger.png" class="image2" /></h1>
 
       <div class="form-group">
         <label> Email Address: </label>
@@ -15,27 +15,19 @@
         <input type="password" class="form-control form-control-lg" />
       </div>
 
+      <div class="form-group">
+        <label> Confirm Password: </label>
+        <input type="password" class="form-control form-control-lg" />
+      </div>
+
       <button type="submit" class="btn btn-dark btn-lg btn-block">
-        Sign In
+        Sign Up
       </button>
 
       <p class="forgot-password text-right mt-2 mb-4">
-        <router-link to="/forgot-password">Forgot password ?</router-link>
+        Already registered?
+        <router-link to="/login" >sign in</router-link>
       </p>
-
-      <div class="social-icons">
-        <ul>
-          <li>
-            <a href="#"><i class="fa fa-google"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-facebook"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-          </li>
-        </ul>
-      </div>
     </form>
   </div>
 </template>
@@ -54,15 +46,13 @@ export default {};
 }
 
 .image2 {
-  width: 230px;
-  height: 210px;
-  position:flexi;
-  /* //right: 200px; */
-  /* display: inline-block; */
+  width: 210px;
+  height: 200px;
+  position: flexi;
+
 }
 
 .div2 {
   background-color: aqua;
 }
-
 </style>
