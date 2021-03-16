@@ -5,37 +5,16 @@
     <form class="inner-block vertical-center">
       <h1><img src="../assets/foodranger.png" class= "image2"></h1>
 
+      <h1> Forgot Password </h1> <br>
       <div class="form-group">
         <label> Email Address: </label>
         <input type="email" class="form-control form-control-lg" />
       </div>
-
-      <div class="form-group">
-        <label> Password: </label>
-        <input type="password" class="form-control form-control-lg" />
-      </div>
-
-      <button type="submit" class="btn btn-dark btn-lg btn-block">
-        Sign In
+       <button type="submit" class="btn btn-dark btn-lg btn-block">
+        Reset Password
       </button>
 
-      <p class="forgot-password text-right mt-2 mb-4">
-        <router-link to="/forgot-password">Forgot password ?</router-link>
-      </p>
 
-      <div class="social-icons">
-        <ul>
-          <li>
-            <a href="#"><i class="fa fa-google"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-facebook"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-          </li>
-        </ul>
-      </div>
     </form>
   </div>
 </template>
