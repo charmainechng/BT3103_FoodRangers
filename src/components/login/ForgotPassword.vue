@@ -1,9 +1,9 @@
 <template>
   <div>
-    <img src="../assets/earth.png" class="image1" />
+    <img src="../../assets/earth.png" class="image1" />
 
     <form class="inner-block vertical-center">
-      <h1><img src="../assets/foodranger.png" class= "image2"></h1>
+      <h1><img src="../../assets/foodranger.png" class= "image2"></h1>
 
       <h1> Forgot Password </h1> <br>
       <div class="form-group">

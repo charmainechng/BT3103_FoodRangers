@@ -1,6 +1,6 @@
-import Login from './components/Login.vue'
-import SignUp from './components/SignUp.vue'
-import ForgotPassword from './components/ForgotPassword.vue'
+import Login from './components/login/Login.vue'
+import SignUp from './components/login/SignUp.vue'
+import ForgotPassword from './components/login/ForgotPassword.vue'
 import MartsPage from './components/mart/martsPage.vue'
 
 export default [
