@@ -1,8 +1,14 @@
 <template> 
 	<div id="mart">
-		<h1>mart</h1>
-		<h1>{{mart.name}}</h1>
-		<img v-bind:src="mart.image">
+		
+		<div>
+			<img v-bind:src="mart.image" id="martImg">
+			<div id="martDetails"> 
+				<h1>{{mart.name}}</h1>
+				<h1> {{mart.address}}</h1>
+		</div>
+	</div>
+		
 
 	</div>
 </template>
@@ -25,11 +31,25 @@
 
 <style>
     #mart {
-    width: 100%;
-    max-width: 70%;
-    margin: 0px;
-    padding: 0 5px;
-    box-sizing: border-box;
+    border: 1px solid white;
+    overflow: hidden;
+    display: table;
+    width: 1000px;
+    float: left;
+    background-color: lightgray;
+    }
+
+    #martImg {
+       width:30%;
+       float: left;
+       border-width: 1px;
+    }
+
+    #martDetails {
+		text-align: center;
+		padding-left: 20px;
+		padding: 20px;
+
     }
 
 </style>
