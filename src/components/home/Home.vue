@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavigationBar></NavigationBar>
+    <Bar></Bar>
       
   </div>
 </template>
@@ -9,13 +9,9 @@
 
 
 <script>
-import NavigationBar from '../NavigationBar.vue';
+
 
 export default {
 
-  component: {
-    NavigationBar
-  }
-  
 }
 

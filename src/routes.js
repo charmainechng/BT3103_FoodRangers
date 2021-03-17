@@ -10,4 +10,5 @@ export default [
     { path: '/forgot-password', component: ForgotPassword },
     { path: '/home', component: Home },
     { path: '/search', component: MartsPage },
+   
 ]
