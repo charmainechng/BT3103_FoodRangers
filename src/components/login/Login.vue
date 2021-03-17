@@ -2,17 +2,25 @@
   <div>
     <img src="../../assets/earth.png" class="image1" />
 
-    <form class="inner-block vertical-center">
-      <h1><img src="../../assets/foodranger.png" class= "image2"></h1>
+    <form class="inner-block vertical-center" @submit.prevent="login">
+      <h1><img src="../../assets/foodranger.png" class="image2" /></h1>
 
       <div class="form-group">
         <label> Email Address: </label>
-        <input type="email" class="form-control form-control-lg" />
+        <input
+          type="email"
+          class="form-control form-control-lg"
+          v-model="email"
+        />
       </div>
 
       <div class="form-group">
         <label> Password: </label>
-        <input type="password" class="form-control form-control-lg" />
+        <input
+          type="password"
+          class="form-control form-control-lg"
+          v-model="password"
+        />
       </div>
 
       <button type="submit" class="btn btn-dark btn-lg btn-block">
@@ -41,14 +49,40 @@
 </template>
 
 <script>
-export default {};
+import firebase from 'firebase'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import '../../assets/main.css'
+
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+
+  methods: {
+    login() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          alert("Successfully logged in");
+          this.$router.push("/home");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
 .image1 {
   width: 600px;
   height: 600px;
-  position: absolute;
+  position: fixed;
   left: 100px;
   display: inline-block;
 }
@@ -56,7 +90,7 @@ export default {};
 .image2 {
   width: 230px;
   height: 210px;
-  position:flexi;
+  position: flexi;
   /* //right: 200px; */
   /* display: inline-block; */
 }
@@ -64,5 +98,4 @@ export default {};
 .div2 {
   background-color: aqua;
 }
-
 </style>
