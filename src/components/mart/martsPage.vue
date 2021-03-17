@@ -5,7 +5,7 @@
 			<input id="search" class="form-control" type="text" v-model="searchQuery" 
 			placeholder="Search Supermarket Name" />
 
-		</div>
+		
 
 
 		
@@ -28,6 +28,7 @@
 			</ul>
 	
 		</div>
+	</div>
 	</div>
 
 </template>
@@ -114,34 +115,56 @@ export default {
 
   #search {
     float:left;
+    height: 1000px;
+    width: 100px;
+    position: absolute;
+    left: 0px;
   }
 
   #main {
      float: left;
-     left: 100px;
+     left: 0px;
      position: absolute;
   }
 
 	#mart {
     border: 1px solid white;
     overflow: hidden;
-    display: table;
+    
     width: 1000px;
+    height: 280px;
     float: left;
     background-color: lightgray;
     }
 
     #martImg {
-       width:30%;
+       width: 400px;
+       height: 280px;
+
+       max-width: 80%;
+       max-height: 100%;
+       
+       
        float: left;
        border-width: 1px;
+       object-fit: cover;
+
     }
 
     #martDetails {
 		text-align: center;
 		padding-left: 20px;
 		padding: 20px;
+		font-size: 10px;
 
+    }
+
+ 
+
+    input,
+    input::-webkit-input-placeholder {
+			font-size: 20px;
+			color: lightgray
     }
 
 
