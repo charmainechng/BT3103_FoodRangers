@@ -9,5 +9,5 @@ export default [
     { path: '/login', component: Login },
     { path: '/forgot-password', component: ForgotPassword },
     { path: '/home', component: Home },
-    { path: '/search', component: MartsPage }
+    { path: '/search', component: MartsPage },
 ]

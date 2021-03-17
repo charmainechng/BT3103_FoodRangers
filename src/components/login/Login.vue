@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class = "body1">
     <img src="../../assets/earth.png" class="image1" />
 
     <form class="inner-block vertical-center" @submit.prevent="login">
@@ -51,7 +51,7 @@
 <script>
 import firebase from 'firebase'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import '../../assets/main.css'
+import './login.css'
 
 export default {
   data() {
@@ -80,16 +80,17 @@ export default {
 
 <style scoped>
 .image1 {
-  width: 600px;
-  height: 600px;
-  position: fixed;
+  width: 640px;
+  height: 630px;
+  position:absolute;
   left: 100px;
   display: inline-block;
+  padding-top: 40px;
 }
 
 .image2 {
-  width: 230px;
-  height: 210px;
+  width: 250px;
+  height: 250px;
   position: flexi;
   /* //right: 200px; */
   /* display: inline-block; */

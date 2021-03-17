@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class= "body1"> 
     <img src="../../assets/earth.png" class="image1" />
-    <form class="inner-block vertical-center" @submit.prevent = "register">
+    <div>
+    <form class="vertical-center inner-block" @submit.prevent = "register">
       <h1><img src="../../assets/foodranger.png" class="image2" /></h1>
 
       <div class="form-group">
@@ -28,13 +29,14 @@
         <router-link to="/login">sign in</router-link>
       </p>
     </form>
+    </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import '../../assets/main.css'
+import './login.css'
 
 export default {
   name: "Register",
@@ -79,18 +81,22 @@ export default {
 }
 
 .image1 {
-  width: 600px;
-  height: 600px;
-  position: absolute;
+  width: 640px;
+  height: 630px;
+  position:absolute;
   left: 100px;
   display: inline-block;
+  padding-top: 40px;
 }
 
 .image2 {
-  width: 210px;
+  width: 200px;
   height: 200px;
   position: flexi;
 }
+
+
+  
 
 
   
