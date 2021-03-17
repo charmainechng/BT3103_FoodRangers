@@ -1,9 +1,9 @@
 <template>
   <div>
-    <img src="../assets/earth.png" class="image1" />
 
+    <img src="../../assets/earth.png" class="image1" />
     <form class="inner-block vertical-center">
-      <h1><img src="../assets/foodranger.png" class="image2" /></h1>
+      <h1><img src="../../assets/foodranger.png" class="image2" /></h1>
 
       <div class="form-group">
         <label> Email Address: </label>
@@ -37,6 +37,17 @@ export default {};
 </script>
 
 <style scoped>
+.header {
+	background: var(--dark-color-a);
+	color: #fff;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
 .image1 {
   width: 600px;
   height: 600px;
