@@ -1,23 +1,22 @@
 <template>
   <div>
-
     <img src="../../assets/earth.png" class="image1" />
-    <form class="inner-block vertical-center">
+    <form class="inner-block vertical-center" @submit.prevent = "register">
       <h1><img src="../../assets/foodranger.png" class="image2" /></h1>
 
       <div class="form-group">
         <label> Email Address: </label>
-        <input type="email" class="form-control form-control-lg" />
+        <input type="email" class="form-control form-control-lg" v-model= "email" />
       </div>
 
       <div class="form-group">
         <label> Password: </label>
-        <input type="password" class="form-control form-control-lg" />
+        <input type="password" class="form-control form-control-lg" v-model= "password" />
       </div>
 
       <div class="form-group">
         <label> Confirm Password: </label>
-        <input type="password" class="form-control form-control-lg" />
+        <input type="password" class="form-control form-control-lg" v-model= "confirm" />
       </div>
 
       <button type="submit" class="btn btn-dark btn-lg btn-block">
@@ -26,26 +25,57 @@
 
       <p class="forgot-password text-right mt-2 mb-4">
         Already registered?
-        <router-link to="/login" >sign in</router-link>
+        <router-link to="/login">sign in</router-link>
       </p>
     </form>
   </div>
 </template>
 
 <script>
-export default {};
+import firebase from "firebase";
+import 'bootstrap/dist/css/bootstrap.min.css'
+import '../../assets/main.css'
+
+export default {
+  name: "Register",
+  data() {
+    return {
+      email: "",
+      password: "",
+      confirm: "",
+    };
+  },
+  methods: {
+    register() {
+      if (this.password != this.confirm) {
+        alert("Password do not match. Please try again");
+      } else {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(() => {
+            alert("Successfully registered! Please login.");
+            this.$router.push("/login");
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
 .header {
-	background: var(--dark-color-a);
-	color: #fff;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	padding: 15px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+  background: var(--dark-color-a);
+  color: #fff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .image1 {
@@ -60,10 +90,8 @@ export default {};
   width: 210px;
   height: 200px;
   position: flexi;
-
 }
 
-.div2 {
-  background-color: aqua;
-}
+
+  
 </style>

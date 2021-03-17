@@ -1,20 +1,15 @@
 * {
     box-sizing:border-box;
-
   }
   
   body {
-    background: #4e807a !important;
+    background: #52a39a !important;
     min-height: 100vh;
     display: flex;
     font-weight: 400;
-  
   }
   
   body,
-  html,
-  .App,
-  .vue-tempalte,
   .vertical-center {
     width: 90%;
     height: 100%;
@@ -25,7 +20,7 @@
   }
   
   .navbar-light {
-    background-color: #baeed4;
+    background-color: #8f9994;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   }
   
@@ -39,7 +34,7 @@
   .inner-block {
     width: 500px;
     margin: auto;
-    background: #ffffffa6;
+    background: #d4ddddab;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
     padding: 0px 40px 15px 40px;
     border-radius: 50px;
