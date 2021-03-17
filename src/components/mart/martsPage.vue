@@ -32,7 +32,7 @@
 
 
 <script>
-//import mart from './mart.vue'
+
 import db from "../../firebase.js";
 export default {
   data() {

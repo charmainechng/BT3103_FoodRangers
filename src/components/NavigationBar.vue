@@ -1,73 +1,69 @@
-<template>  
-<div>
-  <div class="topnav">
-
-  <div class = "topnav-right">
-  <a class="active" href="/home"> Home</a>
-  <a href="#news">My Items</a>
-  <a href="#contact">Dashboard</a>
-  <a href="#about">Shops Near You</a>
-  <a href="/search">Search</a>
-</div>
-</div>
-</div>
+<template>
+  <div>
+    <div class="topnav">
+      <img src="../assets/foodranger.png" />
+      <a href="/home"> Home </a>
+      <a href="/items">My Items</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/map">Shops Near You</a>
+      <a href="/search" class = "active">Search</a>
+      <a href="/settings" class="right">Settings </a>
+         <a href="/login" class="right">Sign Out </a>
+    </div>
+  </div>
 </template>
 
 
 <script>
 
-
 </script>
 
 <style scoped>
 
-
 /* Add a black background color to the top navigation */
 .topnav {
+  display: flex;
   background-color: #333;
-  height: 60px;
+  height: 70px;
+  overflow: hidden;
 }
 
-/* .topnav-right {
-    float: center;
-} */
+.topnav a.right {
+  float: right;
+}
 
 /* Style the links inside the navigation bar */
 .topnav a {
-  float: left;
   color: #f2f2f2;
   text-align: center;
-  padding: 14px 16px;
+  padding: 18px 40px;
   text-decoration: none;
   font-size: 20px;
 }
 
 .topnav img {
-    left: 10px;
-    width: 60px;
-    height: 60px;
-    justify-content:flex-start;
-    image-rendering: optimizeQuality;
-    position: absolute;
-   
+  float: left;
+  left: 20px;
+  width: 210px;
+  height: 230px;
+  display: flex;
+  padding-bottom: 160px;
+  padding-inline: 50px;
+  background: #f2f2f2;
 }
 
-.topnav a.logo {
-  font-size: 25px;
-  font-weight: bold;
-}
 
 /* Change the color of links on hover */
 .topnav a:hover {
   background-color: #ddd;
   color: black;
-  height: 60px;
+  height: 70px;
 }
 
 /* Add a color to the active/current link */
 .topnav a.active {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
-  height: 60px;
+  height: 70px;
 }
 </style>
