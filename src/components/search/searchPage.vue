@@ -42,7 +42,7 @@
                 <img v-bind:src="mart.image" id="martImg" />
                 <div id="martDetails">
                   <h1>{{ mart.name }}</h1>
-                  <h1>Ratings: (i will move ratings elsewhere, this is for fixing bugs) {{mart.ratings}} </h1>
+                  <h1>Ratings: (for bug fixes) {{mart.ratings}} </h1>
                   <h1>{{ mart.address }}</h1>
                 </div>
               </div>
@@ -59,7 +59,6 @@
 <script>
 
 import db from "../../firebase.js";
-//import map from 'underscore/modules/map.js'
 export default {
   data() {
     return {
@@ -111,8 +110,6 @@ export default {
         /*res.forEach((mart) => {
           alert(mart.name + " and ratings: " + mart.ratings);
         })*/
-
-        //res = map.sortBy(res, 'ratings').reverse();
       }
       
     },
@@ -220,9 +217,7 @@ export default {
   },
 
   mounted() {
-    let script = document.createElement('script');
-    script.setAttribute('src', "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js")
-    document.head.appendChild(script);
+    
     },
 
   created() {
