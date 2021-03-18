@@ -2,6 +2,12 @@
   <div>
     <Bar></Bar>
     <div id="main">
+
+      <div id="tab">
+        <h1> Marts in Singapore </h1>
+        <p id="search-tab">Search</p>  
+        <p id="fav-tab"> Favourites </p>
+      </div>
       <div id="search-bar">
         <input
           id="search"
@@ -10,10 +16,26 @@
           v-model="searchQuery"
           placeholder="Search Supermarket Name"
         />
+      </div>
 
+      <div id="dropdown-ratings">
+      <h1>Ratings</h1>
+        <select v-model="selectedRatings" class="form-control sl">
+                    <option value="lowHigh" disabled selected hidden>Low to High</option>
+                    <option  value="highLow">High to Low</option>
+        </select>
+
+        <h1> Type </h1>
+
+        <select v-model="selectedType" class="form-control sl">
+                    <option value="ugly">Discount - Ugly Produce</option>
+                    <option  value="byob">Bring your own bag</option>
+        </select>
+
+      </div>
         <div class="mart">
           <ul>
-            <li v-for="mart in filtered" :key="mart.id">
+            <li v-for="mart in filters" :key="mart.id">
               <div id="mart">
                 <img v-bind:src="mart.image" id="martImg" />
                 <div id="martDetails">
@@ -23,7 +45,7 @@
               </div>
             </li>
           </ul>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -34,32 +56,61 @@
 <script>
 //import mart from './mart.vue'
 import db from "../../firebase.js";
+import map from 'underscore/modules/map.js'
 export default {
   data() {
     return {
       marts: [],
       searchQuery: "",
+      temp: [],
+      filtered: false,
+      selectedRatings: '0', //means didnt select the dropdown for ratings
+      selectedType: "0"
     };
   },
 
   methods: {
-    fetchItems: function () {
-      db.collection("marts")
-        .get()
-        .then((querySnapShot) => {
-          let mart = {};
-          querySnapShot.forEach((doc) => {
-            mart = doc.data();
-            this.marts.push(mart);
-          });
-        });
-    },
-  },
 
-  computed: {
-    filtered: function () {
-      let filter = [];
+    fetchItems:function(){ 
+           db.collection('marts').orderBy('name').get().then((querySnapShot)=>{
+               let mart={} 
+               querySnapShot.forEach(doc=>{
+                    mart=doc.data() 
+                    this.marts.push(mart)
+                }) 
+            }) 
+        },
+
+        orderbyRatings: function(arr) {
+            return map.sortBy(arr, 'ratings');
+        },
+
+        reverseRatings: function(arr) {
+            return map.sortBy(arr, 'ratings').reverse();
+        },
+
+        //toggles from false -> true, or from true -> false
+        setFiltered: function() {
+            if (this.filtered == false) {
+                this.filtered = true;
+            } else {
+                this.filtered = false;
+            }
+        },
+
+        resetTemp: function() {
+           this.temp = [];
+        },
+
+        search: function() {
+            let filter = []
+
+            
       if (this.searchQuery) {
+        if (this.filtered == false) {
+          this.setFiltered();
+        }
+        
         let lowerSearch = this.searchQuery.toLowerCase();
         //alert("there's search" + this.searchQuery);
         this.marts.forEach((mart) => {
@@ -67,17 +118,72 @@ export default {
           if (lower.includes(lowerSearch)) {
             filter.push(mart);
           }
-        });
-        return filter;
+        })
+        //this.temp = filter;
+      return filter;
+
+        
       } else {
         //alert("no search")
         return this.marts;
-      }
+            }
       //let filteredMarts = [];
     },
+
+    type: function(arr) {
+      let type = []
+      if (this.selectedType === "ugly") {
+        arr.forEach((mart) => {
+          let lower = mart.type.toLowerCase();
+          if (lower.includes("ugly")) {
+            type.push(mart);
+          }
+        })
+
+      }
+      return type;
+
+    }
+    //methods end here
   },
 
-  mounted() {},
+  computed: {
+    filters: function() {
+      let res = []
+      //if filtered is true, use temp
+      if (this.filtered) {
+        res = this.temp;
+      } else {
+        res = this.marts;
+      }
+
+      res = this.search();
+
+
+      
+
+      //means no ratings sorted
+      if (this.selectedRatings === "0") {
+        //means no type selected
+        if (this.selectedType === "0") {
+          return res;
+        }
+        
+      }
+
+      return res;
+      
+      
+    }
+
+    //computed ends 
+  },
+
+  mounted() {
+    let script = document.createElement('script');
+    script.setAttribute('src', "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js")
+    document.head.appendChild(script);
+    },
 
   created() {
     this.fetchItems();
@@ -90,57 +196,103 @@ export default {
 </script>
 
 <style>
-ul {
-  list-style-type: none;
-}
+   ul {
+    list-style-type: none;
+    margin: 0; 
+    padding: 0;
+  },
 
-,
-#search {
-  float: left;
-  height: 1000px;
-  width: 100px;
-  position: absolute;
-  left: 0px;
-}
 
-#main {
-  float: left;
-  left: 0px;
-  position: absolute;
-}
+  #main {
+     float: left;
+     
+    
+  }
 
-#mart {
-  border: 1px solid white;
-  overflow: hidden;
+  
+    #tab > p {
+    width: 1000px;
+    height: 70px;
+    float: left;
+    font-size: 50px;
+    font-weight: bold;
+    position: sticky;
+    text-align: center;
+    }
 
-  width: 1000px;
-  height: 280px;
-  float: left;
-  background-color: lightgray;
-}
+    #search-tab {
+    border-width: 100px;
 
-#martImg {
-  width: 400px;
-  height: 280px;
+    background-color: #2c3e50;
+    color: white;
 
-  max-width: 80%;
-  max-height: 100%;
+    }
 
-  float: left;
-  border-width: 1px;
-  object-fit: cover;
-}
+    #fav-tab {
+    border-width: 100px;
+    border-color: white;
 
-#martDetails {
-  text-align: center;
-  padding-left: 20px;
-  padding: 20px;
-  font-size: 10px;
-}
+    background-color: white;
+    color: #2c3e50;
 
-input,
-input::-webkit-input-placeholder {
-  font-size: 20px;
-  color: lightgray;
-}
+    }
+
+    #search {
+    float:left;
+    height: 80px;
+    width: 1000px;
+
+    left: 0px;
+  }
+
+  
+
+  #mart {
+    border: 1px solid white;
+    overflow: hidden;
+    
+    width: 1500px;
+    height: 280px;
+  
+    background-color: lightgray;
+    }
+
+    #martImg {
+       width: 400px;
+       height: 280px;
+
+       max-width: 80%;
+       max-height: 100%;
+       
+       
+       float: left;
+       border-width: 1px;
+       object-fit: cover;
+
+    }
+
+    #martDetails > h1 {
+    text-align: center;
+    padding-left: 20px;
+    padding: 20px;
+    font-size: 50px;
+    color: #2c3e50;
+    font-family: Avenir;
+    font-style: bold;
+
+    }
+
+    #address {
+    font-size: 30px;
+    }
+
+    input,
+    input::-webkit-input-placeholder {
+      font-size: 20px;
+      color: lightgray
+    }
+
+    #dropdown {
+    font-size: 20px;
+    }
 </style>
