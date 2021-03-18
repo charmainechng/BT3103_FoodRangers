@@ -94,6 +94,7 @@ export default {
         //low to high
         
         res.sort((a, b) => b.ratings - a.ratings);
+        return res;
         /*res.forEach((mart) => {
           alert(mart.name + " and ratings: " + mart.ratings);
         })*/
@@ -107,6 +108,7 @@ export default {
         })*/
         
         res.sort((a, b) => a.ratings - b.ratings);
+        return res;
         /*res.forEach((mart) => {
           alert(mart.name + " and ratings: " + mart.ratings);
         })*/
@@ -160,8 +162,8 @@ export default {
             let lower = typeCate.toLowerCase();
             //alert("lower is " + lower);
             if (this.selectedType === "ugly") {
-              if (lower.includes("ugly")) {
-                alert(mart.name + " and type is: " + mart.type)
+              if (lower.includes("discount - ugly produce")) {
+                //alert(mart.name + " and type is: " + mart.type)
                 type.push(mart);
                 return;
               }            
@@ -170,15 +172,16 @@ export default {
                 //alert(mart.name + " and type is: " + mart.type)
                 type.push(mart);
                 return;
+              }
             
-            } else {
+            } else if (this.selectedType === "expiring"){
               if (lower.includes("discount - food expiring soon")) {
                 //alert(mart.name + " and type is: " + mart.type)
                 type.push(mart);
                 return;
               }
             }
-          }
+
 
         })
       })
@@ -205,7 +208,7 @@ export default {
       res = this.search();
       
       
-      this.compareRatings(res);
+      res = this.compareRatings(res);
       res = this.type(res);
 
       return res;
