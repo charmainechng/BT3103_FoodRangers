@@ -81,14 +81,36 @@ export default {
             }) 
     },
 
-    compareRatings: function(a,b) {
-      alert("hi compare");
-      if (a.ratings < b.ratings) {
-        return -1;
-      } else if (a.ratings > b.ratings) {
-        return 1;
-      } 
-      return 0;
+    compareRatings: function(res) {
+      if (this.selectedRatings === "0") {
+        return res;
+      } else if (this.selectedRatings === "highLow") {
+        /*res.forEach((mart) => {
+          alert("res")
+          alert(mart.name + " and ratings: " + mart.ratings);
+        })*/
+        //low to high
+        
+        res.sort((a, b) => b.ratings - a.ratings);
+        /*res.forEach((mart) => {
+          alert(mart.name + " and ratings: " + mart.ratings);
+        })*/
+        //res = map.sortBy(res, 'ratings');
+
+      } else {
+
+        /*res.forEach((mart) => {
+          alert("res")
+          alert(mart.name + " and ratings: " + mart.ratings);
+        })*/
+        
+        res.sort((a, b) => a.ratings - b.ratings);
+        /*res.forEach((mart) => {
+          alert(mart.name + " and ratings: " + mart.ratings);
+        })*/
+
+        //res = map.sortBy(res, 'ratings').reverse();
+      }
       
     },
 
@@ -161,42 +183,7 @@ export default {
 
       res = this.search();
 
-      if (this.selectedRatings === "0") {
-        return res;
-      } else if (this.selectedRatings === "highLow") {
-
-        alert("hi compare");
-        res.forEach((mart) => {
-          alert("res")
-          alert(mart.name + " and ratings: " + mart.ratings);
-        })
-        //low to high
-        
-        res.sort((a, b) => b.ratings - a.ratings);
-        res.forEach((mart) => {
-          alert(mart.name + " and ratings: " + mart.ratings);
-        })
-        //res = map.sortBy(res, 'ratings');
-
-      } else {
-        alert("hi compare");
-
-        res.forEach((mart) => {
-          alert("res")
-          alert(mart.name + " and ratings: " + mart.ratings);
-        })
-        
-        res.sort((a, b) => a.ratings - b.ratings);
-        res.forEach((mart) => {
-          alert(mart.name + " and ratings: " + mart.ratings);
-        })
-
-        //res = map.sortBy(res, 'ratings').reverse();
-      }
-      //alert(this.selectedRatings + " is the ratings");
-      //res = this.compareRatings();
-      //res = this.orderByRatings(res);
-
+      this.compareRatings(res);
       return res;
       
       
