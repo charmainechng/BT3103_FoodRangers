@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "firebase": "^8.3.0",
     "mdbvue": "^6.7.2",
+    "underscore": "^1.12.1",
     "underscore-node": "^0.1.2",
     "vue": "^2.6.11",
     "vue-router": "^3.5.1",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "@types/underscore": "^1.11.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
