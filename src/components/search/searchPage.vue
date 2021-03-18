@@ -18,11 +18,11 @@
         />
       </div>
 
-      <div id="dropdown-ratings">
+      <div id="dropdown-all">
       <h1>Ratings</h1>
         <select v-model="selectedRatings" class="form-control sl">
-                    <option value="lowHigh" v-on:click="compareRatings()">Low to High</option>
-                    <option  value="highLow" v-on:click="compareRatings">High to Low</option>
+                    <option value="lowHigh">Low to High</option>
+                    <option  value="highLow">High to Low</option>
         </select>
 
         <h1> Type </h1>
@@ -35,6 +35,7 @@
         </select>
 
       </div>
+      <h1 id="numOfSearches"> {{filtersCount}} searches found </h1>
         <div class="mart">
           <ul>
             <li v-for="mart in filters" :key="mart.id">
@@ -50,6 +51,7 @@
           </ul>
         
       </div>
+      
     </div>
   </div>
 </template>
@@ -214,10 +216,15 @@ export default {
       return res;
       
       
+    },
+
+    filtersCount: function() {
+      return this.filters.length;
     }
 
     //computed ends 
   },
+
 
   mounted() {
     
@@ -334,5 +341,16 @@ export default {
 
     #dropdown {
     font-size: 30px;
+    }
+
+    #dropdown-all > h1 {
+      float: left;
+    }
+
+    #numOfSearches {
+      float: right;
+
+      font-size: 30px;
+      padding-right: 100px;
     }
 </style>
