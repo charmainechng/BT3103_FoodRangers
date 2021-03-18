@@ -154,14 +154,17 @@ export default {
       //let filteredMarts = [];
     },
 
-    type: function(arr) {
+    type: function(res) {
       let type = []
-      if (this.selectedType === "ugly") {
-        arr.forEach((mart) => {
-          let lower = mart.type.toLowerCase();
-          if (lower.includes("ugly")) {
-            type.push(mart);
-          }
+      res.forEach((mart) => {
+          for (var typeName in mart.type) {
+            let lower = typeName.toLowerCase();
+            if (this.selectedType === "ugly") {
+              if (lower.includes("ugly")) {
+                type.push(mart);
+              }            
+            } else if (this.selectedType)
+
         })
 
       }
@@ -308,6 +311,6 @@ export default {
     }
 
     #dropdown {
-    font-size: 20px;
+    font-size: 30px;
     }
 </style>
