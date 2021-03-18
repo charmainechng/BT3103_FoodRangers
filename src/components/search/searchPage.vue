@@ -8,35 +8,43 @@
         <p id="search-tab">Search</p>  
         <p id="fav-tab"> Favourites </p>
       </div>
-      <div id="search-bar">
+      
+      <div id="filters">
         <input
           id="search"
           class="form-control"
           type="text"
           v-model="searchQuery"
-          placeholder="Search Supermarket Name"
-        />
+          placeholder="Search Supermarket Name"/>
+      
+
+      
+        <div id="dropdown-all">
+          <div id="ratings"> 
+          <h1>Ratings</h1>
+            <select v-model="selectedRatings" id="dropdown">
+
+              <option value="lowHigh">Low to High</option>
+              <option  value="highLow">High to Low</option>
+            </select>
+          </div>
+          <div id="type">
+            <h1> Type </h1>
+
+          <select v-model="selectedType" id="dropdown">
+            <option  value="0">All</option>
+            <option value="ugly">Discount - Ugly Produce</option>
+            <option  value="expiring">Discount - Expiring Food</option>
+            <option  value="byob">Bring your own bag</option>
+          </select>
+        </div>
       </div>
 
-      <div id="dropdown-all">
-      <h1>Ratings</h1>
-        <select v-model="selectedRatings" class="form-control sl">
-                    <option value="lowHigh">Low to High</option>
-                    <option  value="highLow">High to Low</option>
-        </select>
-
-        <h1> Type </h1>
-
-        <select v-model="selectedType" class="form-control sl">
-                    <option  value="0">All</option>
-                    <option value="ugly">Discount - Ugly Produce</option>
-                    <option  value="expiring">Discount - Expiring Food</option>
-                    <option  value="byob">Bring your own bag</option>
-        </select>
-
       </div>
-      <h1 id="numOfSearches"> {{filtersCount}} searches found </h1>
+      <div id="result"> 
+        <h1 id="numOfSearches"> {{filtersCount}} searches found </h1>
         <div class="mart">
+          
           <ul>
             <li v-for="mart in filters" :key="mart.id">
               <div id="mart">
@@ -51,6 +59,7 @@
           </ul>
         
       </div>
+    </div>
       
     </div>
   </div>
@@ -117,9 +126,7 @@ export default {
       }
       
     },
-
-
-      //toggles from false -> true, or from true -> false
+     //toggles from false -> true, or from true -> false
     setFiltered: function() {
       if (this.filtered == false) {
         this.filtered = true;
@@ -127,6 +134,7 @@ export default {
         this.filtered = false;
       }
     },
+
 
     search: function() {
       let filter = []
@@ -251,13 +259,14 @@ export default {
 
 
   #main {
-     float: left;
+
+     padding-left: 100px;
      
     
   }
 
   
-    #tab > p {
+  #tab > p {
     width: 1000px;
     height: 70px;
     float: left;
@@ -285,14 +294,12 @@ export default {
     }
 
     #search {
-    float:left;
-    height: 80px;
-    width: 1000px;
-
+    height: 70px;
+    width: 800px;
+    background-color: #f1f1f1;
     left: 0px;
+    padding-top: 10px;
   }
-
-  
 
   #mart {
     border: 1px solid white;
@@ -320,7 +327,6 @@ export default {
 
     #martDetails > h1 {
     text-align: center;
-    padding-left: 20px;
     padding: 20px;
     font-size: 30px;
     color: #2c3e50;
@@ -335,22 +341,42 @@ export default {
 
     input,
     input::-webkit-input-placeholder {
-      font-size: 20px;
-      color: lightgray
+      font-size: 30px;
+      color: lightgray;
+
     }
 
-    #dropdown {
-    font-size: 30px;
+    input:focus {
+      border: 3px solid #555;
     }
 
-    #dropdown-all > h1 {
+
+
+
+    #dropdown-all > div {
+      font-size: 35px;
+      font-family: Helvetica;
+      color: #2c3e50;
+      border-radius: 4px;
+      background-color: #f1f1f1;
       float: left;
+
     }
+
+    #main {
+      padding-left: 50px;
+      position: sticky;
+    }
+
+    #filters {
+      height: 300px;
+    }
+
+ 
 
     #numOfSearches {
-      float: right;
-
       font-size: 30px;
       padding-right: 100px;
+      float: right;
     }
 </style>
