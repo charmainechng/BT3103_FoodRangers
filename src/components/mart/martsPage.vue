@@ -21,8 +21,8 @@
       <div id="dropdown-ratings">
       <h1>Ratings</h1>
         <select v-model="selectedRatings" class="form-control sl">
-                    <option value="lowHigh" disabled selected hidden>Low to High</option>
-                    <option  value="highLow">High to Low</option>
+                    <option value="lowHigh" v-on:click="compareRatings()">Low to High</option>
+                    <option  value="highLow" v-on:click="compareRatings">High to Low</option>
         </select>
 
         <h1> Type </h1>
@@ -56,7 +56,7 @@
 <script>
 //import mart from './mart.vue'
 import db from "../../firebase.js";
-import map from 'underscore/modules/map.js'
+//import map from 'underscore/modules/map.js'
 export default {
   data() {
     return {
@@ -64,7 +64,7 @@ export default {
       searchQuery: "",
       temp: [],
       filtered: false,
-      selectedRatings: '0', //means didnt select the dropdown for ratings
+      selectedRatings: "0", //means didnt select the dropdown for ratings
       selectedType: "0"
     };
   },
@@ -79,54 +79,56 @@ export default {
                     this.marts.push(mart)
                 }) 
             }) 
-        },
+    },
 
-        orderbyRatings: function(arr) {
-            return map.sortBy(arr, 'ratings');
-        },
+    compareRatings: function(a,b) {
+      alert("hi compare");
+      if (a.ratings < b.ratings) {
+        return -1;
+      } else if (a.ratings > b.ratings) {
+        return 1;
+      } 
+      return 0;
+      
+    },
 
-        reverseRatings: function(arr) {
-            return map.sortBy(arr, 'ratings').reverse();
-        },
 
-        //toggles from false -> true, or from true -> false
-        setFiltered: function() {
-            if (this.filtered == false) {
-                this.filtered = true;
-            } else {
-                this.filtered = false;
-            }
-        },
+      //toggles from false -> true, or from true -> false
+    setFiltered: function() {
+      if (this.filtered == false) {
+        this.filtered = true;
+      } else {
+        this.filtered = false;
+      }
+    },
 
-        resetTemp: function() {
-           this.temp = [];
-        },
+    resetTemp: function() {
+      this.temp = [];
+    },
 
-        search: function() {
-            let filter = []
+    search: function() {
+      let filter = []
 
-            
       if (this.searchQuery) {
         if (this.filtered == false) {
           this.setFiltered();
         }
         
         let lowerSearch = this.searchQuery.toLowerCase();
-        //alert("there's search" + this.searchQuery);
+          //alert("there's search" + this.searchQuery);
         this.marts.forEach((mart) => {
           let lower = mart.name.toLowerCase();
           if (lower.includes(lowerSearch)) {
             filter.push(mart);
           }
         })
-        //this.temp = filter;
-      return filter;
-
-        
+            //this.temp = filter;
+        return filter;
+ 
       } else {
         //alert("no search")
         return this.marts;
-            }
+      }
       //let filteredMarts = [];
     },
 
@@ -159,17 +161,41 @@ export default {
 
       res = this.search();
 
-
-      
-
-      //means no ratings sorted
       if (this.selectedRatings === "0") {
-        //means no type selected
-        if (this.selectedType === "0") {
-          return res;
-        }
+        return res;
+      } else if (this.selectedRatings === "highLow") {
+
+        alert("hi compare");
+        res.forEach((mart) => {
+          alert("res")
+          alert(mart.name + " and ratings: " + mart.ratings);
+        })
+        //low to high
         
+        res.sort((a, b) => b.ratings - a.ratings);
+        res.forEach((mart) => {
+          alert(mart.name + " and ratings: " + mart.ratings);
+        })
+        //res = map.sortBy(res, 'ratings');
+
+      } else {
+        alert("hi compare");
+
+        res.forEach((mart) => {
+          alert("res")
+          alert(mart.name + " and ratings: " + mart.ratings);
+        })
+        
+        res.sort((a, b) => a.ratings - b.ratings);
+        res.forEach((mart) => {
+          alert(mart.name + " and ratings: " + mart.ratings);
+        })
+
+        //res = map.sortBy(res, 'ratings').reverse();
       }
+      //alert(this.selectedRatings + " is the ratings");
+      //res = this.compareRatings();
+      //res = this.orderByRatings(res);
 
       return res;
       
@@ -188,6 +214,8 @@ export default {
   created() {
     this.fetchItems();
   },
+
+
 
   components: {
     //  mart
