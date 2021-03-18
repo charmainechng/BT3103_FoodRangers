@@ -1,7 +1,7 @@
 import Login from './components/login/Login.vue'
 import SignUp from './components/login/SignUp.vue'
 import ForgotPassword from './components/login/ForgotPassword.vue'
-import MartsPage from './components/mart/martsPage.vue'
+import MartsPage from './components/search/searchPage.vue'
 import Home from './components/home/Home.vue'
 
 export default [
