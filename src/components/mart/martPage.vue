@@ -1,4 +1,7 @@
 <template>
+<div>
+   <Bar></Bar>
+</div>
 </template>
 
 <script>
