@@ -28,7 +28,9 @@
         <h1> Type </h1>
 
         <select v-model="selectedType" class="form-control sl">
+                    <option  value="0">All</option>
                     <option value="ugly">Discount - Ugly Produce</option>
+                    <option  value="expiring">Discount - Expiring Food</option>
                     <option  value="byob">Bring your own bag</option>
         </select>
 
@@ -40,6 +42,7 @@
                 <img v-bind:src="mart.image" id="martImg" />
                 <div id="martDetails">
                   <h1>{{ mart.name }}</h1>
+                  <h1>Ratings: (i will move ratings elsewhere, this is for fixing bugs) {{mart.ratings}} </h1>
                   <h1>{{ mart.address }}</h1>
                 </div>
               </div>
@@ -124,10 +127,6 @@ export default {
       }
     },
 
-    resetTemp: function() {
-      this.temp = [];
-    },
-
     search: function() {
       let filter = []
 
@@ -156,18 +155,40 @@ export default {
 
     type: function(res) {
       let type = []
+      if (this.selectedType === "0") {return res}
+
       res.forEach((mart) => {
-          for (var typeName in mart.type) {
-            let lower = typeName.toLowerCase();
+        //alert(mart.name + " in type");
+        mart.type.forEach((typeCate) =>  {
+            let lower = typeCate.toLowerCase();
+            //alert("lower is " + lower);
             if (this.selectedType === "ugly") {
               if (lower.includes("ugly")) {
+                alert(mart.name + " and type is: " + mart.type)
                 type.push(mart);
+                return;
               }            
-            } else if (this.selectedType)
+            } else if (this.selectedType === "byob") {
+              if (lower.includes("bring your own bag")) {
+                //alert(mart.name + " and type is: " + mart.type)
+                type.push(mart);
+                return;
+            
+            } else {
+              if (lower.includes("discount - food expiring soon")) {
+                //alert(mart.name + " and type is: " + mart.type)
+                type.push(mart);
+                return;
+              }
+            }
+          }
 
         })
+      })
 
-      }
+      /*type.forEach((mart) => {
+        alert("marts in type are " + mart.name);
+      })*/
       return type;
 
     }
@@ -176,7 +197,7 @@ export default {
 
   computed: {
     filters: function() {
-      let res = []
+      var res = []
       //if filtered is true, use temp
       if (this.filtered) {
         res = this.temp;
@@ -185,8 +206,11 @@ export default {
       }
 
       res = this.search();
-
+      
+      
       this.compareRatings(res);
+      res = this.type(res);
+
       return res;
       
       
@@ -293,7 +317,7 @@ export default {
     text-align: center;
     padding-left: 20px;
     padding: 20px;
-    font-size: 50px;
+    font-size: 30px;
     color: #2c3e50;
     font-family: Avenir;
     font-style: bold;
