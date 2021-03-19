@@ -2,13 +2,13 @@
   <div>
     <div class="topnav">
       <img src="../assets/foodranger.png" />
-      <a href="/home"><i class="fa fa-bank fa-2x" aria-hidden="true"></i> Home </a>
-      <a href="/items"><i class="fa fa-shopping-basket fa-2x" aria-hidden="true"></i> My Items</a>
-      <a href="/dashboard"><i class="fa fa-bar-chart fa-2x" aria-hidden="true"></i> Dashboard</a>
-      <a href="/map"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i> Shops Near You</a>
-      <a href="/search"><i class="fa fa-search fa-2x" aria-hidden="true"></i> Search</a>
-      <a href="/settings" class="right"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i> Settings </a>
-        <a href="/login" class="right"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>Sign Out </a>
+      <a href="/home"> Home </a>
+      <a href="/items">My Items</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/map">Shops Near You</a>
+      <a href="/search" class = "active">Search</a>
+      <a href="/settings" class="right">Settings </a>
+         <a href="/login" class="right">Sign Out </a>
     </div>
   </div>
 </template>
@@ -36,33 +36,26 @@
 .topnav a {
   color: #f2f2f2;
   text-align: center;
-  padding: 10px 20px;
+  padding: 18px 40px;
   text-decoration: none;
   font-size: 20px;
 }
 
-/* .topnav img {
+.topnav img {
   float: left;
-  left: 10px;
-  width: 200px;
+  left: 20px;
+  width: 210px;
   height: 230px;
   display: flex;
   padding-bottom: 160px;
   padding-inline: 50px;
   background: #f2f2f2;
-} */
-
-.topnav img {
-  width: 160px;
-  height: 70px;
-  background: #f2f2f2;
-  padding-inline: 14px;
 }
 
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  background-color:#4caf50;
+  background-color: #ddd;
   color: black;
   height: 70px;
 }
