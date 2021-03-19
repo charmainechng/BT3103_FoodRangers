@@ -8,38 +8,50 @@
         <p id="search-tab">Search</p>  
         <p id="fav-tab"> Favourites </p>
       </div>
-      <div id="search-bar">
+      
+      <div id="filters">
         <input
           id="search"
           class="form-control"
           type="text"
           v-model="searchQuery"
-          placeholder="Search Supermarket Name"
-        />
+          placeholder="Search Supermarket Name"/>
+      
+
+      
+        <div id="dropdown-all">
+          <div id="ratings"> 
+          <h1>Ratings</h1>
+            <select v-model="selectedRatings" id="dropdown">
+
+              <option value="lowHigh">Low to High</option>
+              <option  value="highLow">High to Low</option>
+            </select>
+          </div>
+          <div id="type">
+            <h1> Type </h1>
+
+          <select v-model="selectedType" id="dropdown">
+            <option  value="0">All</option>
+            <option value="ugly">Discount - Ugly Produce</option>
+            <option  value="expiring">Discount - Expiring Food</option>
+            <option  value="byob">Bring your own bag</option>
+          </select>
+        </div>
       </div>
 
-      <div id="dropdown-ratings">
-      <h1>Ratings</h1>
-        <select v-model="selectedRatings" class="form-control sl">
-                    <option value="lowHigh" v-on:click="compareRatings()">Low to High</option>
-                    <option  value="highLow" v-on:click="compareRatings">High to Low</option>
-        </select>
-
-        <h1> Type </h1>
-
-        <select v-model="selectedType" class="form-control sl">
-                    <option value="ugly">Discount - Ugly Produce</option>
-                    <option  value="byob">Bring your own bag</option>
-        </select>
-
       </div>
+      <div id="result"> 
+        <h1 id="numOfSearches"> {{filtersCount}} searches found </h1>
         <div class="mart">
+          
           <ul>
             <li v-for="mart in filters" :key="mart.id">
               <div id="mart">
                 <img v-bind:src="mart.image" id="martImg" />
                 <div id="martDetails">
                   <h1>{{ mart.name }}</h1>
+                  <h1>Ratings: (for bug fixes) {{mart.ratings}} </h1>
                   <h1>{{ mart.address }}</h1>
                 </div>
               </div>
@@ -47,6 +59,8 @@
           </ul>
         
       </div>
+    </div>
+      
     </div>
   </div>
 </template>
@@ -56,7 +70,6 @@
 <script>
 
 import db from "../../firebase.js";
-//import map from 'underscore/modules/map.js'
 export default {
   data() {
     return {
@@ -92,6 +105,7 @@ export default {
         //low to high
         
         res.sort((a, b) => b.ratings - a.ratings);
+        return res;
         /*res.forEach((mart) => {
           alert(mart.name + " and ratings: " + mart.ratings);
         })*/
@@ -105,17 +119,14 @@ export default {
         })*/
         
         res.sort((a, b) => a.ratings - b.ratings);
+        return res;
         /*res.forEach((mart) => {
           alert(mart.name + " and ratings: " + mart.ratings);
         })*/
-
-        //res = map.sortBy(res, 'ratings').reverse();
       }
       
     },
-
-
-      //toggles from false -> true, or from true -> false
+     //toggles from false -> true, or from true -> false
     setFiltered: function() {
       if (this.filtered == false) {
         this.filtered = true;
@@ -124,9 +135,6 @@ export default {
       }
     },
 
-    resetTemp: function() {
-      this.temp = [];
-    },
 
     search: function() {
       let filter = []
@@ -154,17 +162,43 @@ export default {
       //let filteredMarts = [];
     },
 
-    type: function(arr) {
+    type: function(res) {
       let type = []
-      if (this.selectedType === "ugly") {
-        arr.forEach((mart) => {
-          let lower = mart.type.toLowerCase();
-          if (lower.includes("ugly")) {
-            type.push(mart);
-          }
-        })
+      if (this.selectedType === "0") {return res}
 
-      }
+      res.forEach((mart) => {
+        //alert(mart.name + " in type");
+        mart.type.forEach((typeCate) =>  {
+            let lower = typeCate.toLowerCase();
+            //alert("lower is " + lower);
+            if (this.selectedType === "ugly") {
+              if (lower.includes("discount - ugly produce")) {
+                //alert(mart.name + " and type is: " + mart.type)
+                type.push(mart);
+                return;
+              }            
+            } else if (this.selectedType === "byob") {
+              if (lower.includes("bring your own bag")) {
+                //alert(mart.name + " and type is: " + mart.type)
+                type.push(mart);
+                return;
+              }
+            
+            } else if (this.selectedType === "expiring"){
+              if (lower.includes("discount - food expiring soon")) {
+                //alert(mart.name + " and type is: " + mart.type)
+                type.push(mart);
+                return;
+              }
+            }
+
+
+        })
+      })
+
+      /*type.forEach((mart) => {
+        alert("marts in type are " + mart.name);
+      })*/
       return type;
 
     }
@@ -173,7 +207,7 @@ export default {
 
   computed: {
     filters: function() {
-      let res = []
+      var res = []
       //if filtered is true, use temp
       if (this.filtered) {
         res = this.temp;
@@ -182,20 +216,26 @@ export default {
       }
 
       res = this.search();
+      
+      
+      res = this.compareRatings(res);
+      res = this.type(res);
 
-      this.compareRatings(res);
       return res;
       
       
+    },
+
+    filtersCount: function() {
+      return this.filters.length;
     }
 
     //computed ends 
   },
 
+
   mounted() {
-    let script = document.createElement('script');
-    script.setAttribute('src', "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js")
-    document.head.appendChild(script);
+    
     },
 
   created() {
@@ -219,13 +259,14 @@ export default {
 
 
   #main {
-     float: left;
+
+     padding-left: 100px;
      
     
   }
 
   
-    #tab > p {
+  #tab > p {
     width: 1000px;
     height: 70px;
     float: left;
@@ -253,14 +294,12 @@ export default {
     }
 
     #search {
-    float:left;
-    height: 80px;
-    width: 1000px;
-
+    height: 70px;
+    width: 800px;
+    background-color: #f1f1f1;
     left: 0px;
+    padding-top: 10px;
   }
-
-  
 
   #mart {
     border: 1px solid white;
@@ -288,9 +327,8 @@ export default {
 
     #martDetails > h1 {
     text-align: center;
-    padding-left: 20px;
     padding: 20px;
-    font-size: 50px;
+    font-size: 30px;
     color: #2c3e50;
     font-family: Avenir;
     font-style: bold;
@@ -303,11 +341,42 @@ export default {
 
     input,
     input::-webkit-input-placeholder {
-      font-size: 20px;
-      color: lightgray
+      font-size: 30px;
+      color: lightgray;
+
     }
 
-    #dropdown {
-    font-size: 20px;
+    input:focus {
+      border: 3px solid #555;
+    }
+
+
+
+
+    #dropdown-all > div {
+      font-size: 35px;
+      font-family: Helvetica;
+      color: #2c3e50;
+      border-radius: 4px;
+      background-color: #f1f1f1;
+      float: left;
+
+    }
+
+    #main {
+      padding-left: 50px;
+      position: sticky;
+    }
+
+    #filters {
+      height: 300px;
+    }
+
+ 
+
+    #numOfSearches {
+      font-size: 30px;
+      padding-right: 100px;
+      float: right;
     }
 </style>
