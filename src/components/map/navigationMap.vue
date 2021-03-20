@@ -1,19 +1,37 @@
 <template>
 <div>
     <br>
-    <h1> Shops Near Me </h1>
+    <h2> Shops Near Me </h2>
     
-    {{this.marts}}
+    <!--{{this.markers}}
+    <div :key="index" v-for="(m, index) in markers">
+        {{m[1]}}
+        </div> -->
+
+    <p> 🗺 Please enable location services for the map to work. 🗺
+        <br> ⏰ The map will take a few seconds to load. ⏰ </p>
+
     <gmap-map
-    :center="{lat:1.3521, lng:103.8198}"
-    :zoom="11"
-    map-type-id="terrain"
-    style="width: 600px; height: 600px">
+        :center="{lat:center.lat, lng:center.lng}"
+        :zoom="12.5"
+        map-type-id="terrain"
+        style="width: 650px; height: 650px">
 
     <gmap-marker
         :key="index"
-        v-for="(m, index) in markers">
+        v-for="(m, index) in markers"
+        :position="m[1]"
+        @click="toggleInfoWindow(m,index)">
     </gmap-marker>
+
+    <gmap-info-window
+        :options="infoOptions"
+        :position="infoWindowPos"
+        :opened="infoWinOpen"
+        @closeclick="infoWinOpen=false"
+      >
+    <div v-html="infoContent"></div>
+    </gmap-info-window>
 
     </gmap-map>
 
@@ -28,35 +46,92 @@ export default {
 
     data() {
         return {
+            center: {lat:0, lng:0},
             marts: [],
-            markers: []
-        };
+            markers: [],
+            infoContent: '',
+            infoWindowPos: {
+                lat: 0,
+                lng: 0
+            },
+            infoWinOpen: false,
+            currentMidx: null,
+            infoOptions: {
+                pixelOffset: {
+                width: 0,
+                height: -35
+            }
+            },
+        }
+    },
+
+    mounted : function() {
+        this.geolocation();
     },
 
     methods: {
+    geolocation : function() {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
+    },
+
     fetchItems: function() { 
            db.collection('marts').get().then((querySnapShot)=>{
                let mart = {} 
                querySnapShot.forEach(doc=>{
-                    mart=doc.data();
+                    mart=[doc.id,doc.data()];
                     this.marts.push(mart);
                 }) 
             }) 
     },
 
     getMarkers: function() {
-        for (let i = 0; i < this.marts.length; i++) {
-            this.markers.push([this.marts[i].coordinates.latitude, this.marts[i].coordinates.longitde, this.marts[i].type]);
+        db.collection('marts').get().then((querySnapShot)=>{
+            let marker = {}
+            querySnapShot.forEach(doc=>{
+                let entry = doc.data();
+                marker = [entry.name, entry.position, entry.type]
+                this.markers.push(marker)
+            })
+        })   
+    },
+
+    toggleInfoWindow: function (marker, idx) {
+        this.infoWindowPos = marker[1];
+        this.infoContent = this.getInfoWindowContent(marker);
+
+        if (this.currentMidx == idx) {
+          this.infoWinOpen = !this.infoWinOpen;
         }
+
+        else {
+          this.infoWinOpen = true;
+          this.currentMidx = idx;
+        }
+    },
+
+    getInfoWindowContent: function (marker) {
+        return (`<div>
+                    <p>${marker[0]}</p>
+                </div>
+                <div class="content">
+                    <p>${marker[2]}</p>
+                </div>`);
+        },
+    },
+
+    created() {
+        this.fetchItems();
+        this.getMarkers();
     }
-
-    }
-
-
-
-
 }
 </script>
 
 <style scoped>
 </style>
+
+

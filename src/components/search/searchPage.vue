@@ -8,20 +8,20 @@
         <p id="search-tab">Search</p>  
         <p id="fav-tab"> Favourites </p>
       </div>
-      
+
       <div id="filters">
-        <input
-          id="search"
+        <div id="search-div">
+        <input id="search"
           class="form-control"
-          type="text"
-          v-model="searchQuery"
+          type="text" v-model="searchQuery"
           placeholder="Search Supermarket Name"/>
+        </div>
       
 
       
         <div id="dropdown-all">
           <div id="ratings"> 
-          <h1>Ratings</h1>
+          <p>Ratings</p>
             <select v-model="selectedRatings" id="dropdown">
 
               <option value="lowHigh">Low to High</option>
@@ -29,7 +29,7 @@
             </select>
           </div>
           <div id="type">
-            <h1> Type </h1>
+            <p> Type </p>
 
           <select v-model="selectedType" id="dropdown">
             <option  value="0">All</option>
@@ -48,11 +48,11 @@
           <ul>
             <li v-for="mart in filters" :key="mart.id">
               <div id="mart">
-                <img v-bind:src="mart.image" id="martImg" />
+                <img v-bind:src="mart[1].image" id="martImg" />
                 <div id="martDetails">
-                  <h1>{{ mart.name }}</h1>
-                  <h1>Ratings: (for bug fixes) {{mart.ratings}} </h1>
-                  <h1>{{ mart.address }}</h1>
+                  <h1 v-bind:mod ="mart[0]" v-on:click="route($event)">{{mart[1].name }}</h1>
+                  <h1>Ratings: (for bug fixes) {{mart[1].ratings}} </h1>
+                  <h1>{{ mart[1].address }}</h1>
                 </div>
               </div>
             </li>
@@ -88,7 +88,7 @@ export default {
            db.collection('marts').orderBy('name').get().then((querySnapShot)=>{
                let mart={} 
                querySnapShot.forEach(doc=>{
-                    mart=doc.data() 
+                    mart=[doc.id,doc.data()]
                     this.marts.push(mart)
                 }) 
             }) 
@@ -104,7 +104,7 @@ export default {
         })*/
         //low to high
         
-        res.sort((a, b) => b.ratings - a.ratings);
+        res.sort((a, b) => b[1].ratings - a[1].ratings);
         return res;
         /*res.forEach((mart) => {
           alert(mart.name + " and ratings: " + mart.ratings);
@@ -118,7 +118,7 @@ export default {
           alert(mart.name + " and ratings: " + mart.ratings);
         })*/
         
-        res.sort((a, b) => a.ratings - b.ratings);
+        res.sort((a, b) => a[1].ratings - b[1].ratings);
         return res;
         /*res.forEach((mart) => {
           alert(mart.name + " and ratings: " + mart.ratings);
@@ -147,7 +147,7 @@ export default {
         let lowerSearch = this.searchQuery.toLowerCase();
           //alert("there's search" + this.searchQuery);
         this.marts.forEach((mart) => {
-          let lower = mart.name.toLowerCase();
+          let lower = mart[1].name.toLowerCase();
           if (lower.includes(lowerSearch)) {
             filter.push(mart);
           }
@@ -168,7 +168,7 @@ export default {
 
       res.forEach((mart) => {
         //alert(mart.name + " in type");
-        mart.type.forEach((typeCate) =>  {
+        mart[1].type.forEach((typeCate) =>  {
             let lower = typeCate.toLowerCase();
             //alert("lower is " + lower);
             if (this.selectedType === "ugly") {
@@ -201,7 +201,13 @@ export default {
       })*/
       return type;
 
-    }
+    },
+    route:function(event){
+
+        const doc_id = event.target.getAttribute("mod");
+        //this.$router.push({name: 'modify', params: {doc_id}});
+        this.$router.push({path: `/mart/${doc_id}`});
+      } 
     //methods end here
   },
 
@@ -267,12 +273,10 @@ export default {
 
   
   #tab > p {
-    width: 1000px;
+    width: 800px;
     height: 70px;
-    float: left;
     font-size: 50px;
     font-weight: bold;
-    position: sticky;
     text-align: center;
     }
 
@@ -290,15 +294,17 @@ export default {
 
     background-color: white;
     color: #2c3e50;
+    float: left;
 
     }
 
     #search {
-    height: 70px;
-    width: 800px;
+    height: 50px;
+    width: 700px;
     background-color: #f1f1f1;
     left: 0px;
     padding-top: 10px;
+    float:left;
   }
 
   #mart {
@@ -312,8 +318,9 @@ export default {
     }
 
     #martImg {
-       width: 400px;
-       height: 280px;
+       width: 360px;
+       height: 250px;
+
 
        max-width: 80%;
        max-height: 100%;
@@ -341,7 +348,7 @@ export default {
 
     input,
     input::-webkit-input-placeholder {
-      font-size: 30px;
+      font-size: 20px;
       color: lightgray;
 
     }
@@ -354,7 +361,7 @@ export default {
 
 
     #dropdown-all > div {
-      font-size: 35px;
+      font-size: 25px;
       font-family: Helvetica;
       color: #2c3e50;
       border-radius: 4px;
@@ -364,19 +371,33 @@ export default {
     }
 
     #main {
-      padding-left: 50px;
+      padding-left: 100px;
       position: sticky;
     }
 
     #filters {
-      height: 300px;
+      height: 150px;
+      width: 2000px;
+      background-color: #f1f1f1;
+      float: left;
     }
-
- 
-
+    
     #numOfSearches {
       font-size: 30px;
       padding-right: 100px;
       float: right;
+    }
+
+    #search-div {
+      padding-left: 50px;
+      padding-top: 50px;
+    }
+
+    #dropdown-all {
+      float: left;
+    }
+
+    #result {
+      width: 2000px;
     }
 </style>

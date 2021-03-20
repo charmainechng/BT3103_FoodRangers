@@ -19,5 +19,6 @@ export default [
     { path:'/mart', component: martPage},
     { path: '/items', component: itemsPage},
     { path: '/dashboard', component: Dashboard},
-    {path: '/settings', component: Settings}
+    {path: '/settings', component: Settings},
+    { path:'/mart/:id', component: martPage, props: true},
 ]
