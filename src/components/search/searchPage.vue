@@ -8,7 +8,7 @@
         <p id="search-tab">Search</p>  
         <p id="fav-tab"> Favourites </p>
       </div>
-      
+
       <div id="filters">
         <div id="search-div">
         <input id="search"
