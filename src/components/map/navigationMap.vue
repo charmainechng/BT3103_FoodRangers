@@ -1,16 +1,19 @@
 <template>
 <div>
     <br>
-    <h1> Shops Near Me </h1>
+    <h2> Shops Near Me </h2>
     
-    {{this.markers}}
+    <!--{{this.markers}}
     <div :key="index" v-for="(m, index) in markers">
         {{m[1]}}
-        </div>
+        </div> -->
+
+    <p> Please enable location services for the map to work.
+        The map will take a few seconds to load. </p>
 
     <gmap-map
-        :center="center"
-        :zoom="11"
+        :center="{lat:center.lat, lng:center.lng}"
+        :zoom="12.5"
         map-type-id="terrain"
         style="width: 600px; height: 600px">
 
@@ -43,7 +46,7 @@ export default {
 
     data() {
         return {
-            center: {lat:1.3521, lng:103.8198},
+            center: {lat:0, lng:0},
             marts: [],
             markers: [],
             infoContent: '',
@@ -53,7 +56,6 @@ export default {
             },
             infoWinOpen: false,
             currentMidx: null,
-            //optional: offset infowindow so it visually sits nicely on top of our marker
             infoOptions: {
                 pixelOffset: {
                 width: 0,
@@ -63,7 +65,20 @@ export default {
         }
     },
 
+    mounted : function() {
+        this.geolocation();
+    },
+
     methods: {
+    geolocation : function() {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
+    },
+
     fetchItems: function() { 
            db.collection('marts').get().then((querySnapShot)=>{
                let mart = {} 
