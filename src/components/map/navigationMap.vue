@@ -8,14 +8,14 @@
         {{m[1]}}
         </div> -->
 
-    <p> Please enable location services for the map to work.
-        The map will take a few seconds to load. </p>
+    <p> 🗺 Please enable location services for the map to work. 🗺
+        <br> ⏰ The map will take a few seconds to load. ⏰ </p>
 
     <gmap-map
         :center="{lat:center.lat, lng:center.lng}"
         :zoom="12.5"
         map-type-id="terrain"
-        style="width: 600px; height: 600px">
+        style="width: 650px; height: 650px">
 
     <gmap-marker
         :key="index"
