@@ -177,4 +177,11 @@ export default {
     #result {
       width: 2000px;
     }
+
+    #loc-div {
+      width: 500px;
+      float: left;
+      padding-left: 50px;
+
+    }
 </style>

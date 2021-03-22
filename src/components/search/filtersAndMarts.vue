@@ -2,14 +2,15 @@
 	<div>
       <div id="filters">
         <div id="search-div">
-        <input id="search"
-          class="form-control"
-          type="text" v-model="searchQuery"
+        <input id="search" class="form-control" type="text" v-model="searchQuery"
           placeholder="Search Supermarket Name"/>
         </div>
-      
+        
+        <div id="loc-div">
+          <input id="location" class="form-control" type="text" v-model="distance"
+          placeholder="Location"/>
+        </div>
 
-      
         <div id="dropdown-all">
           <div id="ratings"> 
           <p>Ratings</p>
@@ -61,10 +62,13 @@ export default {
     return {
       marts: [],
       searchQuery: "",
+      distance: "",
+      gotDist: false,
       temp: [],
       filtered: false,
       selectedRatings: "0", //means didnt select the dropdown for ratings
-      selectedType: "0"
+      selectedType: "0",
+      center: {lat:0, lng:0},
     };
   },
 
@@ -188,12 +192,78 @@ export default {
       return type;
 
     },
+
+    degreesToRadians: function(degrees) {
+      return degrees * Math.PI / 180;
+    },
+
+    distanceBtwn: function(lat1, lon1, lat2, lon2) {
+      var earthRadiusKm = 6371;
+
+      var dLat = this.degreesToRadians(lat2-lat1);
+      var dLon = this.degreesToRadians(lon2-lon1);
+
+      lat1 = this.degreesToRadians(lat1);
+      lat2 = this.degreesToRadians(lat2);
+
+      var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      return earthRadiusKm * c;
+    }, 
+
+    toggleDist: function() {
+      if (this.gotDist == false) {
+        this.gotDist = true;
+      } else {
+        this.gotDist = false;
+      }
+    },
+
+    location:function(res) {
+      //alert("location")
+      //alert("curr location is: lat is " + this.center.lat + " and lng is " + this.center.lng)
+      //alert(this.distance + " is v-model dist")
+
+      let loc = []
+      if (this.distance) {
+        if (this.gotDist == false) {
+          this.toggleDist();
+        }
+      }
+
+      let distInt = parseFloat(this.distance);
+      if (this.distance == "") {return res}
+
+      res.forEach((mart) => {
+        //alert("for each loop, mart position is " + mart[1].name + " " + JSON.stringify(mart[1].position))
+        let martCoords = mart[1].position
+        //alert("mart's coords are " + martCoords["lat"])
+        
+        let distBtwn = this.distanceBtwn(this.center.lat, this.center.lng, martCoords.lat, martCoords.lng)
+        //alert(distBtwn + " is distance between coords")
+        if (distBtwn <= distInt) {
+          loc.push(mart);
+        }
+      })
+      return loc;
+    },
+
+    geolocation: function() {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
+    },
     route:function(event){
 
         const doc_id = event.target.getAttribute("mod");
         //this.$router.push({name: 'modify', params: {doc_id}});
         this.$router.push({path: `/mart/${doc_id}`});
-      } 
+    },
+
     //methods end here
   },
 
@@ -209,6 +279,7 @@ export default {
       res = this.search();
       res = this.compareRatings(res);
       res = this.type(res);
+      res = this.location(res);
 
       return res;
       
@@ -224,11 +295,14 @@ export default {
 
 
   mounted() {
+
+
     
     },
 
   created() {
     this.fetchItems();
+    this.geolocation();
   },
 
 };
