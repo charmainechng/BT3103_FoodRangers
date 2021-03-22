@@ -23,7 +23,8 @@
 <script>
 
 //import db from "../../firebase.js";
-import filters from "./filters.vue";
+import filters from "./filtersAndMarts.vue";
+
 export default {
   components: {
     //  mart
