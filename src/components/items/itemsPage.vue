@@ -1,19 +1,21 @@
 <template>
   <div>
     <Bar></Bar>
-    <button class="tablink" onclick="openPage('Home', this, 'red')">
-      Your Items
-    </button>
-    <button
-      class="tablink"
-      onclick="openPage('News', this, 'green')"
-      id="defaultOpen"
-    >
-      Items Expiring Soon
-    </button>
-    <button class="tablink" onclick="openPage('Contact', this, 'blue')">
-      Items Expired
-    </button>
+    <p>Personal Items</p>
+    <div class="vertical-align">
+      <div class="items">
+        <h1>All Items
+          <button>+</button>
+        </h1>
+      </div>
+      <div class="expiring-soon">
+        <h1>Expiring Soon</h1>
+      </div>
+
+      <div class="expired">
+        <h1>Expired</h1>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,51 +27,66 @@ export default {};
 </script>
 
 <style scoped>
-/* Set height of body and the document to 100% to enable "full page tabs" */
-body,
-html {
-  height: 100%;
-  margin: 0;
-  font-family: Arial;
+p {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-align: left;
+  padding-left: 50px;
+  font-size: 40px;
+}
+* {
+  box-sizing: border-box;
 }
 
-/* Style tab links */
-.tablink {
-  background-color: rgb(160, 189, 187);
-  color: rgb(255, 255, 255);
-
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 44px 10px;
-  font-size: 20px;
-  width: 33.31%;
+.items {
+  width: 45%;
+  height: 129%;
+  position: absolute;
+  display: flex;
+  background: #2e976cab;
+  margin-top: 30px;
+  margin-left: 60px;
+  border-radius: 50px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
 }
 
-.tablink:hover {
-  background-color: #777;
+.expiring-soon {
+  width: 40%;
+  height: 60%;
+  position: absolute;
+  background: #f3ae53ab;
+  margin-top: 30px;
+  right: 50px;
+  border-radius: 50px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
 }
 
-/* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-  color: white;
-  display: none;
-  padding: 100px 20px;
-  height: 100%;
-
+.expired {
+  width: 40%;
+  height: 60%;
+  position: absolute;
+  background: #972e2eab;
+  right: 50px;
+  border-radius: 50px;
+  transition: all 0.3s;
+  margin-top: 500px;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
 }
 
-#Home {
-  background-color: red;
-}
-#News {
-  background-color: green;
-}
-#Contact {
-  background-color: blue;
-}
-#About {
-  background-color: orange;
+vertical-align {
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
 }
 </style>

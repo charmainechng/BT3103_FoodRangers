@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="topnav">
-      <img src="../assets/foodranger.png" />
+      <!-- <img src="../assets/foodranger.png" /> -->
       <a href="/home"><i class="fa fa-bank fa-2x" aria-hidden="true"></i> Home </a>
       <a href="/items"><i class="fa fa-shopping-basket fa-2x" aria-hidden="true"></i> My Items</a>
       <a href="/dashboard"><i class="fa fa-bar-chart fa-2x" aria-hidden="true"></i> Dashboard</a>
       <a href="/map"><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i> Shops Near You</a>
       <a href="/search"><i class="fa fa-search fa-2x" aria-hidden="true"></i> Search</a>
       <a href="/settings" class="right"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i> Settings </a>
-        <a href="/login" class="right"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>Sign Out </a>
+      <a href="/login" class="right"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>Sign Out </a>
     </div>
   </div>
 </template>
