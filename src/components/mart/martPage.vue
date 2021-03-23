@@ -1,8 +1,8 @@
 <template>
   <div>
     <Bar></Bar>
-    <nav> <h1> Fairprice West Coast Drive </h1>
-    <p></p>
+    <nav> 
+   
        </nav>
   </div>
 </template>

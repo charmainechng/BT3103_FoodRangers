@@ -17,6 +17,7 @@
     "core-js": "^3.6.5",
     "firebase": "^8.3.0",
     "mdbvue": "^6.7.2",
+    "moment": "^2.29.1",
     "underscore": "^1.12.1",
     "underscore-node": "^0.1.2",
     "vee-validate": "^3.4.5",

@@ -26,6 +26,7 @@
   background-color: #333;
   height: 70px;
   overflow: hidden;
+  width: 100%;
 }
 
 .topnav a.right {
