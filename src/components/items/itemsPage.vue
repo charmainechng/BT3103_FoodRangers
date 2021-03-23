@@ -1,16 +1,19 @@
 <template>
   <div>
     <Bar></Bar>
-    <p>Personal Items</p>
+    <p class="title">Personal Items</p>
     <div class="vertical-align">
       <div class="items">
         <h1>All Items <button>+</button></h1>
         <div class="list" v-for="item in this.items" :key="item.id">
           <img v-bind:src="item[1].img" id="itemImg" />
-          <div id=itemDetails>
+          <div id="itemDetails">
             <h1>{{ item[1].name }}</h1>
-            <h2>{{ item[1].state }}</h2>
-            <h3>Expiry Date : {{item[1].expiry}}</h3>
+            <p> <b> State: </b> {{ item[1].state }}</p> 
+            <p> <b>Expiry Date: </b>{{ item[1].expiry }}</p>
+            
+            <h3> <b>{{ item[1].numDaysLeft }}</b> more days</h3>
+         
           </div>
         </div>
       </div>
@@ -50,27 +53,25 @@ export default {
         .then((querySnapShot) => {
           // let item = {};
           querySnapShot.forEach((doc) => {
-            var edate = moment(doc.data().expiry);
-            // var tdydate = new Date().toISOString().slice(0, 10);
-            var tdydate = moment(Date.now());
-            var duration = moment.duration(edate.diff(tdydate));
-            //var days = Math.round(duration.asDays());
-            let item = [doc.id, doc.data()];
-            this.items.push(item);
+            var edate = moment(doc.data().expiry, "DD-MM-YYYY");
+            var tdydate = moment();
+            var days = edate.diff(tdydate, "days");
+            let id = doc.id;
+            let item_dict = doc.data();
+            item_dict["numDaysLeft"] = days;
 
-            console.log(tdydate);
-            console.log(doc.data().expiry);
-            console.log(duration);
             //if it does not expire within 3 days, consider it not expiring soon
             if (edate - tdydate > 3) {
-              this.items.push(item);
+              doc.data["numDaysLeft"] = days;
+              this.items.push([id, item_dict]);
 
               // expires in <=3 days
             } else if (edate - tdydate <= 3) {
-              this.expiring.push(item);
+              this.items.push([id, item_dict]);
+
               // expired already
             } else if (edate < tdydate) {
-              this.expired.push(item);
+              this.items.push([id, item_dict]);
             }
           });
         });
@@ -90,6 +91,7 @@ export default {
   align-items: left;
 } */
 
+
 .list h1 {
   font-size: 20px;
   text-decoration: black;
@@ -98,7 +100,7 @@ export default {
   padding-top: 20px;
 }
 
-.list h2 {
+.list p {
   font-size: 15px;
   text-decoration: black;
   text-align: left;
@@ -106,10 +108,12 @@ export default {
 
 .list h3 {
   font-size: 15px;
-  text-align: left;
+  color: crimson;
+  text-align: right;
 }
 
-p {
+
+.title  {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   text-align: left;
   padding-left: 50px;
