@@ -1,11 +1,13 @@
 <template>
   <div>
     <Bar></Bar>
+
     <p class="title">Personal Items</p>
     <div class="vertical-align">
       <div class="items">
         <h1>All Items <button>+</button></h1>
-        <div class="list" v-for="item in this.items" :key="item.id">
+        <ul>
+        <li class="list" v-for="item in this.items" :key="item.id">
           <img v-bind:src="item[1].img" id="itemImg" />
           <div id="itemDetails">
             <h1>{{ item[1].name }}</h1>
@@ -15,7 +17,8 @@
             <h3> <b>{{ item[1].numDaysLeft }}</b> more days</h3>
          
           </div>
-        </div>
+        </li>
+        </ul>
       </div>
 
       <div class="expiring-soon">
@@ -34,8 +37,8 @@
 
 <script>
 import moment from "moment";
-
 import db from "../../firebase.js";
+// import addItem from "./addItem.vue";
 
 export default {
   data() {
@@ -45,6 +48,9 @@ export default {
       expired: [],
     };
   },
+  // components: {
+  //   addItem
+  // },
 
   methods: {
     fetchItems: function () {
@@ -85,12 +91,10 @@ export default {
 </script>
 
 <style scoped>
-/* .itemDetails{
-  text-align: left;
-  justify-items: left;
-  align-items: left;
-} */
-
+  ul {
+    list-style-type: none;
+    margin: 0; 
+  }
 
 .list h1 {
   font-size: 20px;
@@ -107,9 +111,10 @@ export default {
 }
 
 .list h3 {
-  font-size: 15px;
+  font-size: 25px;
   color: crimson;
   text-align: right;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
 
@@ -129,10 +134,12 @@ export default {
   background: rgba(174, 214, 174, 0.911);
   border-radius: 50px;
   display: flex;
-  margin-top: 30px;
+  /* margin-top: 30px; */
   height: 190px;
-  width: 90%;
+  width: 95%;
+  padding: 5px;
   text-align: center;
+  padding-left: 80px;
 }
 
 * {
