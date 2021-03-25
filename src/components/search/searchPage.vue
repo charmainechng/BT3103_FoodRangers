@@ -77,7 +77,7 @@ export default {
 
     #search {
     height: 50px;
-    width: 700px;
+    width: 500px;
     background-color: #f1f1f1;
     left: 0px;
     padding-top: 10px;
@@ -175,13 +175,14 @@ export default {
     }
 
     #result {
-      width: 2000px;
+      width: 1500px;
     }
 
     #loc-div {
-      width: 500px;
+      width: 600px;
+      height: 100px;
       float: left;
-      padding-left: 50px;
+      padding-left: 20px;
 
     }
 </style>
