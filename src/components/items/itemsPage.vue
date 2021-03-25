@@ -5,19 +5,33 @@
     <p class="title">Personal Items</p>
     <div class="vertical-align">
       <div class="items">
-        <h1>All Items <button>+</button></h1>
+        <h1>All Items</h1>
+        <button
+          class="button btn btn-info btn-lg"
+          data-toggle="modal"
+          data-target="#myModal"
+        >
+          +
+        </button>
+        <addItem></addItem>
+
         <ul>
-        <li class="list" v-for="item in this.items" :key="item.id">
-          <img v-bind:src="item[1].img" id="itemImg" />
-          <div id="itemDetails">
-            <h1>{{ item[1].name }}</h1>
-            <p> <b> State: </b> {{ item[1].state }}</p> 
-            <p> <b>Expiry Date: </b>{{ item[1].expiry }}</p>
-            
-            <h3> <b>{{ item[1].numDaysLeft }}</b> more days</h3>
-         
-          </div>
-        </li>
+          <li v-for="item in this.items" :key="item.id">
+            <div id="list">
+              <img v-bind:src="item[1].img" id="itemImg" />
+              <div id="itemDetails">
+                <p>
+                  <b>{{ item[1].name }} </b>
+                </p>
+                <p>State: {{ item[1].state }}</p>
+                <p>Expiry Date: {{ item[1].expiry }}</p>
+
+                <h3>
+                  <b>{{ item[1].numDaysLeft }}</b> more days
+                </h3>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
 
@@ -38,8 +52,7 @@
 <script>
 import moment from "moment";
 import db from "../../firebase.js";
-// import addItem from "./addItem.vue";
-
+import addItem from "./addItem.vue";
 export default {
   data() {
     return {
@@ -48,10 +61,9 @@ export default {
       expired: [],
     };
   },
-  // components: {
-  //   addItem
-  // },
-
+  components: {
+    addItem,
+  },
   methods: {
     fetchItems: function () {
       db.collection("items")
@@ -65,16 +77,13 @@ export default {
             let id = doc.id;
             let item_dict = doc.data();
             item_dict["numDaysLeft"] = days;
-
             //if it does not expire within 3 days, consider it not expiring soon
             if (edate - tdydate > 3) {
               doc.data["numDaysLeft"] = days;
               this.items.push([id, item_dict]);
-
               // expires in <=3 days
             } else if (edate - tdydate <= 3) {
               this.items.push([id, item_dict]);
-
               // expired already
             } else if (edate < tdydate) {
               this.items.push([id, item_dict]);
@@ -83,7 +92,6 @@ export default {
         });
     },
   },
-
   created() {
     this.fetchItems();
   },
@@ -91,70 +99,86 @@ export default {
 </script>
 
 <style scoped>
-  ul {
-    list-style-type: none;
-    margin: 0; 
-  }
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  flex-grow: 1;
+  flex-basis: 300px;
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+}
 
-.list h1 {
+p {
   font-size: 20px;
   text-decoration: black;
-  font-weight: bolder;
-  text-align: left;
-  padding-top: 20px;
-}
-
-.list p {
-  font-size: 15px;
-  text-decoration: black;
   text-align: left;
 }
 
-.list h3 {
-  font-size: 25px;
+h3 {
+  font-size: 23px;
   color: crimson;
   text-align: right;
-  font-family:Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-
-.title  {
+.title {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   text-align: left;
   padding-left: 50px;
   font-size: 40px;
 }
 
-.itemImg {
-  border-radius: 30px;
+#itemImg {
+  width: auto;
+  max-width: 200px;
+  height: auto;
+  max-height: 200px;
+  left: 20px;
   float: left;
+  border-width: 1px;
+  overflow: hidden;
 }
 
-.list {
+#itemDetails {
+  align-items: center;
+  text-align: center;
+  padding: 25px;
+  color: #2c3e50;
+  float: right;
+}
+
+#list {
   background: rgba(174, 214, 174, 0.911);
   border-radius: 50px;
   display: flex;
-  /* margin-top: 30px; */
-  height: 190px;
-  width: 95%;
-  padding: 5px;
-  text-align: center;
-  padding-left: 80px;
+  width: auto;
+  height: auto;
+  border: 1.8px solid rgb(3, 3, 3);
+  overflow: hidden;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-button {
-  background-color: #ebf0eba9; /* Green */
+.button {
+  position: absolute;
+  top: 10px;
+  border-radius: 30px;
+  right: 20px;
+  z-index: 2;
   border: none;
-  color: rgb(15, 15, 15);
-  padding: 8px 20px;
+  top: 2px;
+  height: 58px;
+  cursor: pointer;
+  width: 55px;
+  color: white;
+  font-size: 40px;
   text-align: center;
-  text-decoration: none;
-  font-size: 30px;
-  border-radius: 50px;
+  color: black;
+  background-color: #ebf0eba9;
+  transform: translateX(2px);
 }
 
 .items {
@@ -162,7 +186,7 @@ button {
   height: 129%;
   position: absolute;
   display: flex;
-  background: #2e976cab;
+  background: #2e976bcb;
   margin-top: 30px;
   margin-left: 60px;
   border-radius: 50px;
@@ -171,7 +195,6 @@ button {
   /* justify-content: center; */
   flex-direction: column;
 }
-
 .expiring-soon {
   width: 40%;
   height: 60%;
@@ -186,7 +209,6 @@ button {
   /* justify-content: center; */
   flex-direction: column;
 }
-
 .expired {
   width: 40%;
   height: 60%;
@@ -201,7 +223,6 @@ button {
   /* justify-content: center; */
   flex-direction: column;
 }
-
 vertical-align {
   /* display: flex; */
   align-items: center;
@@ -209,3 +230,8 @@ vertical-align {
   flex-direction: row;
 }
 </style>
+
+
+
+
+
