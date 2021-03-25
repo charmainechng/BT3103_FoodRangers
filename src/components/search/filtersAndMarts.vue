@@ -43,7 +43,7 @@
                 <img v-bind:src="mart[1].image" id="martImg" />
                 <div id="martDetails">
                   <h1 v-bind:mod ="mart[0]" v-on:click="route($event)">{{mart[1].name }}</h1>
-                  <h1>Ratings: (for bug fixes) {{mart[1].ratings}} </h1>
+                  <h1>Ratings:  {{mart[1].ratings}} </h1>
                   <h1>{{ mart[1].address }}</h1>
                 </div>
               </div>
