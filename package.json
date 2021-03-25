@@ -27,6 +27,7 @@
     "vue": "^2.6.12",
     "vue-ripple-directive": "^2.0.1",
     "vue-router": "^3.5.1",
+    "vue-star-rating": "^1.7.0",
     "vue-underscore": "^0.1.4",
     "vue2-google-maps": "^0.10.7"
   },

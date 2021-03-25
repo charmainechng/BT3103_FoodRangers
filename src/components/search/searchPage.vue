@@ -12,6 +12,7 @@
 
       <filters></filters>
 
+
       
       
     </div>
@@ -24,11 +25,13 @@
 
 //import db from "../../firebase.js";
 import filters from "./filtersAndMarts.vue";
+//import starRatings from "./starRatings.vue";
 
 export default {
   components: {
     //  mart
-    filters
+    filters,
+   // starRatings
   },
 };
 </script>

@@ -44,6 +44,7 @@
                 <div id="martDetails">
                   <h1 v-bind:mod ="mart[0]" v-on:click="route($event)">{{mart[1].name }}</h1>
                   <h1>Ratings:  {{mart[1].ratings}} </h1>
+                  <starRatings v-bind:rating = "mart[1].ratings"></starRatings>
                   <h1>{{ mart[1].address }}</h1>
                 </div>
               </div>
@@ -57,6 +58,7 @@
 
 <script>
 import db from "../../firebase.js";
+import starRatings from "./starRatings.vue";
 export default {
   data() {
     return {
@@ -304,6 +306,10 @@ export default {
     this.fetchItems();
     this.geolocation();
   },
+
+  components: {
+    starRatings
+  }
 
 };
 </script>
