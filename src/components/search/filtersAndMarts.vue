@@ -6,12 +6,26 @@
           placeholder="Search Supermarket Name"/>
         </div>
         
-        <div id="loc-div" class="searchLoc">
-          <input id="location" class="form-control" type="text" v-model="distance"
-          placeholder="How many km away from your current location?"/>
-        </div>
+
 
         <div id="dropdown-all">
+
+          <div id="loc-div">
+            <p>Distance away from you </p>
+
+            <select v-model="distance" id="dropdown">
+
+              <option value="1">1 km</option>
+              <option  value="5">5 km</option>
+              <option  value="10">10 km</option>
+            </select>
+
+            <!--
+            <input id="location" class="form-control" type="text" v-model="distance"
+              placeholder="How many km away from your current location?"/> 
+            -->
+          </div>
+
           <div id="ratings"> 
           <p>Ratings</p>
             <select v-model="selectedRatings" id="dropdown">
@@ -66,7 +80,7 @@ export default {
     return {
       marts: [],
       searchQuery: "",
-      distance: "",
+      distance: "0",
       gotDist: false,
       temp: [],
       filtered: false,
@@ -225,6 +239,7 @@ export default {
     },
 
     location:function(res) {
+      if (this.distance === "0") {return res}
       //alert("location")
       //alert("curr location is: lat is " + this.center.lat + " and lng is " + this.center.lng)
       //alert(this.distance + " is v-model dist")
