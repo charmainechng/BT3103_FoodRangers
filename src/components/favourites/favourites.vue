@@ -11,10 +11,18 @@
           <a href="/search">Search</a>  
           <p id="fav-tab"> Favourites </p>
         </div>
+        <br>
+        <br>
+
       </div>
   </div>
 </template>
 
 <script>
-export default {};
+
+export default {
+  components: {
+
+  },
+}
 </script>
