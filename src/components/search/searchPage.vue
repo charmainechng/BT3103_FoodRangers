@@ -92,7 +92,7 @@ export default {
     overflow: hidden;
     
     width: 1500px;
-    height: 280px;
+    height: 250px;
   
     background-color: lightgray;
     }
@@ -115,7 +115,8 @@ export default {
     #martDetails > h1 {
     text-align: center;
     padding: 20px;
-    font-size: 30px;
+    font-size: 40px;
+    font-weight: bold;
     color: #2c3e50;
     font-family: Avenir;
     font-style: bold;
@@ -188,4 +189,20 @@ export default {
       padding-left: 20px;
 
     }
+
+    #martDetails {
+      float: left;
+      padding: 20px;
+      width: 750px;
+    }
+
+
+    #starRatings {
+    text-align: center;
+    float: left;
+    padding-top: 10px;
+    font-size: 25px;
+    padding-left: 40px;
+
+  }
 </style>

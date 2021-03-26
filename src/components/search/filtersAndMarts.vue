@@ -43,10 +43,12 @@
                 <img v-bind:src="mart[1].image" id="martImg" />
                 <div id="martDetails">
                   <h1 v-bind:mod ="mart[0]" v-on:click="route($event)">{{mart[1].name }}</h1>
-                  <h1>Ratings:  {{mart[1].ratings}} </h1>
-                  <starRatings v-bind:rating = "mart[1].ratings"></starRatings>
-                  <h1>{{ mart[1].address }}</h1>
+                  
+                  <h2>{{ mart[1].address }}</h2>
                 </div>
+                <div id="starRatings">
+                  <starRatings  v-bind:rating = "mart[1].ratings"></starRatings>
+                </div> 
               </div>
             </li>
           </ul>
@@ -313,4 +315,14 @@ export default {
 
 };
 </script>
+
+<style>
+  
+  #starRatings {
+    text-align: center;
+    float:left;
+    font-size: 30px;
+
+  }
+</style>
 

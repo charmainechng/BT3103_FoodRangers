@@ -1,7 +1,9 @@
 <template>
-	<div>
-		<h2>Read Only Stars</h2>
-		<starRating :rating="rating" :read-only="true" :increment="0.1" :fixed-points="1"></starRating>
+	<div id=starRatingsVue>
+
+		<starRating :rating="rating" :read-only="true" :increment="0.1" :show-rating="false"
+		:fixed-points="1" inactive-color="#ffffff" id="ratingsStar"></starRating>
+		<h1 id=starRatingsVue>{{rating}} </h1>
 	</div>
  
 
@@ -43,3 +45,10 @@
   }
 
   </script>
+
+  <style>
+	#starRatingsVue {
+		padding-top: 20px;
+		font-size: 50px;
+	}
+  </style>
