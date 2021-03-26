@@ -9,6 +9,7 @@ import itemsPage from "./components/items/itemsPage.vue"
 import addItems from "./components/items/addItem.vue"
 import Dashboard from "./components/dashboard/Dashboard.vue"
 import Settings from "./components/settings/Settings.vue"
+import fav from "./components/favourites/favourites.vue"
 
 export default [
     { path: '/', component: SignUp },
@@ -23,4 +24,5 @@ export default [
     { path: '/dashboard', component: Dashboard},
     {path: '/settings', component: Settings},
     { path:'/mart/:id', component: martPage, props: true},
+    {path: '/favourites', component: fav}
 ]

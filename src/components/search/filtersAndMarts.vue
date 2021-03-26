@@ -240,7 +240,7 @@ export default {
       if (this.distance == "") {return res}
 
       res.forEach((mart) => {
-        alert("for each loop, mart position is " + mart[1].name + " " + JSON.stringify(mart[1].position))
+       // alert("for each loop, mart position is " + mart[1].name + " " + JSON.stringify(mart[1].position))
         let martCoords = mart[1].position
         //alert("mart's coords are " + martCoords["lat"])
         

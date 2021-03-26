@@ -7,7 +7,7 @@
       <div id="tab">
         <h1> Marts in Singapore </h1>
         <p id="search-tab">Search</p>  
-        <p id="fav-tab"> Favourites </p>
+        <a href="/favourites" id="fav-tab"> Favourites </a>
       </div>
 
       <filters></filters>
