@@ -3,7 +3,7 @@
 
 		<starRating :rating="rating" :read-only="true" :increment="0.1" :show-rating="false"
 		:fixed-points="1" inactive-color="#ffffff" id="ratingsStar"></starRating>
-		<h1 id=starRatingsVue>{{rating}} </h1>
+		<h1 id=starRatingsVue>Ratings: {{rating}} </h1>
 	</div>
  
 
@@ -49,6 +49,6 @@
   <style>
 	#starRatingsVue {
 		padding-top: 20px;
-		font-size: 50px;
+		font-size: 30px;
 	}
   </style>

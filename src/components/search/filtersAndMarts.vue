@@ -1,12 +1,12 @@
 <template>
 	<div>
       <div id="filters">
-        <div id="search-div">
+        <div id="search-div" class="searchLoc">
         <input id="search" class="form-control" type="text" v-model="searchQuery"
           placeholder="Search Supermarket Name"/>
         </div>
         
-        <div id="loc-div">
+        <div id="loc-div" class="searchLoc">
           <input id="location" class="form-control" type="text" v-model="distance"
           placeholder="How many km away from your current location?"/>
         </div>
@@ -44,7 +44,7 @@
                 <div id="martDetails">
                   <h1 v-bind:mod ="mart[0]" v-on:click="route($event)">{{mart[1].name }}</h1>
                   
-                  <h2>{{ mart[1].address }}</h2>
+                  <h4>{{ mart[1].address }}</h4>
                 </div>
                 <div id="starRatings">
                   <starRatings  v-bind:rating = "mart[1].ratings"></starRatings>

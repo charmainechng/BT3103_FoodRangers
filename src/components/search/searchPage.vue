@@ -52,54 +52,59 @@ export default {
   }
 
   
-  #tab > p {
-    width: 800px;
+  #tab {
+    width: 1250px;
     height: 70px;
     font-size: 50px;
     font-weight: bold;
-    text-align: center;
+    
     }
 
     #search-tab {
-    border-width: 100px;
 
+    float: left;
+    width: 600px;
     background-color: #2c3e50;
     color: white;
+    text-align: center;
 
     }
 
     #fav-tab {
     border-width: 100px;
+    width: 600px;
     border-color: white;
-
+    text-align: center;
     background-color: white;
     color: #2c3e50;
     float: left;
 
+
     }
 
-    #search {
+    .searchLoc {
     height: 50px;
-    width: 500px;
+    width: 400px;
     background-color: #f1f1f1;
     left: 0px;
-    padding-top: 10px;
+    padding-top: 50px;
     float:left;
+    padding-right: 20px;
   }
 
   #mart {
     border: 1px solid white;
     overflow: hidden;
     
-    width: 1500px;
-    height: 250px;
+    width: 1250px;
+    height: 200px;
   
     background-color: lightgray;
     }
 
     #martImg {
-       width: 360px;
-       height: 250px;
+       width: 288px;
+       height: 200px;
 
 
        max-width: 80%;
@@ -115,7 +120,7 @@ export default {
     #martDetails > h1 {
     text-align: center;
     padding: 20px;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     color: #2c3e50;
     font-family: Avenir;
@@ -123,13 +128,10 @@ export default {
 
     }
 
-    #address {
-    font-size: 30px;
-    }
 
     input,
     input::-webkit-input-placeholder {
-      font-size: 20px;
+      font-size: 15px;
       color: lightgray;
 
     }
@@ -142,58 +144,55 @@ export default {
 
 
     #dropdown-all > div {
-      font-size: 25px;
+      font-size: 20px;
       font-family: Helvetica;
       color: #2c3e50;
       border-radius: 4px;
       background-color: #f1f1f1;
       float: left;
+      padding-top: 10px;
+      padding-right: 20px
 
     }
 
+    #dropdown-all > p {
+      margin: 0px;
+    }
+
     #main {
-      padding-left: 100px;
+      padding-left: 50px;
       position: sticky;
     }
 
     #filters {
-      height: 150px;
-      width: 2000px;
+      height: 100px;
+      width: 1250px;
       background-color: #f1f1f1;
       float: left;
     }
     
     #numOfSearches {
-      font-size: 30px;
+      font-size: 25px;
       padding-right: 100px;
       float: right;
     }
 
     #search-div {
-      padding-left: 50px;
+      padding-left: 20px;
       padding-top: 50px;
     }
 
-    #dropdown-all {
-      float: left;
-    }
 
     #result {
-      width: 1500px;
+      width: 1250px;
     }
 
-    #loc-div {
-      width: 600px;
-      height: 100px;
-      float: left;
-      padding-left: 20px;
 
-    }
 
     #martDetails {
       float: left;
       padding: 20px;
-      width: 750px;
+      width: 625px;
     }
 
 
@@ -201,7 +200,7 @@ export default {
     text-align: center;
     float: left;
     padding-top: 10px;
-    font-size: 25px;
+    font-size: 15px;
     padding-left: 40px;
 
   }
