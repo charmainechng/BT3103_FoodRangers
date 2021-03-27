@@ -11,47 +11,62 @@
         <div class="modal-body">
           <form>
             <label for="name"><b>Food Item: </b></label>
-            <input type="text" placeholder="Enter food" name="food" required />
+            <input
+              type="text"
+              placeholder="Enter food"
+              name="food"
+              required
+              v-model="foodname"
+            />
             <br />
 
             <input
+              @click="click1"
               type="file"
               accept="image/*"
-              @change="uploadImage($event)"
+              @change="previewImage"
               id="file-input"
             />
             <br />
 
+            <div v-if="img != null">
+              <img class="preview" height="200" width="200" :src="img" />
+              <br />
+            </div>
+
             <label for="text"><b> Category: </b></label>
 
-            <select>
-              <option value="0">Meat</option>
-              <option value="1">Diary</option>
-              <option value="2">Biscuit</option>
-              <option value="3">Drinks</option>
+            <select v-model="category">
+              <option value="meat">Meat</option>
+              <option value="diary">Diary</option>
+              <option value="biscuit">Biscuit</option>
+              <option value="drink">Drinks</option>
             </select>
-           
+
+            <label for="text"><b> State: </b></label>
+
+            <select v-model="state">
+              <option value="opened">Opened</option>
+              <option value="unopened">Unopened</option>
+            </select>
             <label for="text"> <b>Perishable?</b></label>
-            <input
-              type="radio"
-              id="yes"
-              name="option"
-              value="yes"
-              v-model="checkOption"
-            />
-            <label for="yes">Yes</label>
-            <p v-if="checkOption == 'yes'">
-              <label>Predicted Expiry Date: </label> <br />
+            <select v-model="perishable">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+
+            <p v-if="perishable == 'yes'">
+              <label for="text">
+                <b>Predicted Expiry Date: {{ this.predexpiry }} </b>
+              </label>
+            </p>
+            <p v-if="perishable == 'no'">
+              <label><b>Expiry Date: </b></label>
+              <input type="date" v-model="expirydate" />
             </p>
 
-            <input
-              type="radio"
-              id="no"
-              name="option"
-              value="no"
-              v-model="checkOption"
-            />
-            <label for="no">No</label>
+            <label for="text"> <b>Amount saved ($):</b></label>
+            <input type="text" value="$ " />
           </form>
         </div>
         <div class="modal-footer">
@@ -65,21 +80,33 @@
 </template>
 
 <script>
+//import firebase from "../../firebase.js";
 export default {
   data() {
     return {
-      previewImage: null,
+      dict: {},
+      foodname: "",
+      img: null,
+      category: "",
+      state: "",
+      perishable: "",
+      predexpiry: "",
+      expirydate: "",
+      money: "",
     };
   },
+
   methods: {
-    uploadImage: function (e) {
-      const image = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(image);
-      reader.onload = (e) => {
-        this.previewImage = e.target.result;
-        console.log(this.previewImage);
-      };
+    addItem() {
+      this.dict['name']
+    },
+    click1() {
+      this.$refs.input1.click();
+    },
+
+    previewImage(e) {
+      const file = e.target.files[0];
+      this.img = URL.createObjectURL(file);
     },
   },
 };
@@ -87,20 +114,20 @@ export default {
 
 <style scoped>
 label {
-  width: 100px;
+  width: 200px;
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
+  align-items: left;
 }
 
-input, select {
-    width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
+input,
+select {
+  width: 100%;
+  padding: 11px;
+  margin: 2px 0 10px 0;
   display: inline-block;
   border: none;
   background: #f1f1f1;
+  color: black;
 }
-
-
 </style>
