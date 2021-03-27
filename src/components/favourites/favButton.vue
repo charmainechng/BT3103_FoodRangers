@@ -1,7 +1,7 @@
 <template>
 
 
-  <button id="like" v-on:click="favMart()">Like </button>
+  <button id="like" v-on:click="deleteMart()">Like </button>
 </template>
 
 
@@ -40,7 +40,6 @@
 
             //var lst=[];
             alert("mart id " + this.mart[0]);
-            alert("added")
           db.collection('favMart').doc(added[0]).set(added[1]);
             //alert(this.itemsSelected + " saved to database");
             
@@ -62,10 +61,10 @@
            },
 
         deleteMart: function() {
+          this.setToggle();
           let doc_id = this.mart[0];
           alert("doc id is " + doc_id);
-          alert("deleted");
-          db.collection('favMart').doc(doc_id).delete();
+          db.collection('favMart').doc(doc_id).delete().then( () => {location.reload()});
         },
 
         favMart: function() {
