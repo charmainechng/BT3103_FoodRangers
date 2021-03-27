@@ -155,6 +155,11 @@ export default {
 
     }
 
+      #martLink:hover {
+        color: blue;
+        cursor: pointer;
+      }
+
     #dropdown-all > p {
       margin: 0px;
     }

@@ -58,12 +58,13 @@
               <div id="mart">
                 <img v-bind:src="mart[1].image" id="martImg" />
                 <div id="martDetails">
-                  <h1 v-bind:mod ="mart[0]" v-on:click="route($event)">{{mart[1].name }}</h1>
+                  <h1 id="martLink" v-bind:mod ="mart[0]" v-on:click="route($event)">{{mart[1].name }}</h1>
                   
                   <h4>{{ mart[1].address }}</h4>
                 </div>
                 <div id="starRatings">
                   <starRatings  v-bind:rating = "mart[1].ratings"></starRatings>
+                  <like v-bind:mart="mart"></like>
                 </div> 
               </div>
             </li>
@@ -77,6 +78,7 @@
 <script>
 import db from "../../firebase.js";
 import starRatings from "./starRatings.vue";
+import like from "./favButton.vue";
 export default {
   data() {
     return {
@@ -327,7 +329,8 @@ export default {
   },
 
   components: {
-    starRatings
+    starRatings,
+    like
   }
 
 };
