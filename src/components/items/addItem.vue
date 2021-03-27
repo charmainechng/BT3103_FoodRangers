@@ -41,6 +41,7 @@
               <option value="diary">Diary</option>
               <option value="biscuit">Biscuit</option>
               <option value="drink">Drinks</option>
+              <option value="vegetable">Vegetable</option>
             </select>
 
             <label for="text"><b> State: </b></label>
@@ -57,7 +58,7 @@
 
             <p v-if="perishable == 'yes'">
               <label for="text">
-                <b>Predicted Expiry Date: {{ this.predexpiry }} </b>
+                <b>Predicted Expiry Date: </b> {{ this.getPredDate() }}
               </label>
             </p>
             <p v-if="perishable == 'no'">
@@ -66,11 +67,16 @@
             </p>
 
             <label for="text"> <b>Amount saved ($):</b></label>
-            <input type="text" value="$ " />
+            <input type="text" value="$ " v-model="money" />
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
+          <button
+            type="button"
+            class="btn btn-default"
+            data-dismiss="modal"
+            @click="addItem"
+          >
             Add
           </button>
         </div>
@@ -80,7 +86,9 @@
 </template>
 
 <script>
-//import firebase from "../../firebase.js";
+import db from "../../firebase.js";
+import moment from "moment";
+
 export default {
   data() {
     return {
@@ -90,16 +98,43 @@ export default {
       category: "",
       state: "",
       perishable: "",
-      predexpiry: "",
       expirydate: "",
       money: "",
+      numDay: 0,
     };
   },
 
   methods: {
     addItem() {
-      this.dict['name']
+      this.dict["name"] = this.foodname;
+      this.dict["category"] = this.category;
+      this.dict["state"] = this.state;
+      this.dict["expiry"] = moment(this.expirydate).format("DD-MM-YYYY");
+      this.dict["img"] = this.img;
+      this.dict["saved"] = this.money;
+
+      db.collection("items")
+        .add(this.dict)
+        .then(() => {
+          location.reload();
+        });
     },
+
+    getPredDate() {
+      var chosenCat = this.category;
+      db.collection("perishable")
+        .get()
+        .then((querySnapShot) => {
+          querySnapShot.forEach((doc) => {
+            var food = doc.data();
+            this.numDay = food[chosenCat];
+          });
+        });
+      // alert(this.numDay);
+      this.expirydate = moment().add(this.numDay, "days").format("DD-MM-YYYY");
+      return this.expirydate;
+    },
+
     click1() {
       this.$refs.input1.click();
     },
@@ -107,6 +142,7 @@ export default {
     previewImage(e) {
       const file = e.target.files[0];
       this.img = URL.createObjectURL(file);
+      
     },
   },
 };

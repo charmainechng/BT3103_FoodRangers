@@ -4,7 +4,7 @@
 
     <p class="title">Personal Items</p>
     <div class="vertical-align">
-      <div class="items">
+      <div class="items scroll">
         <h1>All Items</h1>
         <button
           class="button btn btn-info btn-lg"
@@ -77,7 +77,7 @@ export default {
             let id = doc.id;
             let item_dict = doc.data();
             item_dict["numDaysLeft"] = days;
-            
+
             //if it does not expire within 3 days, consider it not expiring soon
             if (edate - tdydate > 3) {
               doc.data["numDaysLeft"] = days;
@@ -100,6 +100,15 @@ export default {
 </script>
 
 <style scoped>
+.scroll {
+  margin: 4px, 4px;
+  padding: 4px;
+  width: 500px;
+  height: 110px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: justify;
+}
 ul {
   display: flex;
   flex-wrap: wrap;
@@ -149,12 +158,12 @@ h3 {
   align-items: center;
   text-align: center;
   padding: 25px;
-  color: #2c3e50;
+  color: #192027;
   float: right;
 }
 
 #list {
-  background: rgba(174, 214, 174, 0.911);
+  background: rgba(180, 212, 180, 0.911);
   border-radius: 50px;
   display: flex;
   width: auto;

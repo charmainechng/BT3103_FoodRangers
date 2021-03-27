@@ -19,11 +19,13 @@
         likeToggle: false,
       }
     },
+
     props: {
       mart: {
         
       }
     },
+
     methods: {
       setToggle: function() {
         if (this.likeToggle == false) {
@@ -32,11 +34,15 @@
           //if likeToggle = true, set to false
           this.likeToggle = false;
         }
+
       },
         addMart: function() {
           alert("mart is " + this.mart[1].name);
           //let doc_id = this.mart[0];
+
           let added = this.mart;
+
+
             //var lst=[];
             alert("mart id " + this.mart[0]);
             alert("added")
@@ -48,20 +54,25 @@
               const quantity = curr_item[1];
                 //const price = curr_item[2];
               const name = curr_item[0];
+
               lst.push({name, quantity});
                 
               }
+
               db.collection('favMart').add({
                   lst
                 });*/
+
             
            },
+
         deleteMart: function() {
           let doc_id = this.mart[0];
           alert("doc id is " + doc_id);
           alert("deleted");
           db.collection('favMart').doc(doc_id).delete();
         },
+
         favMart: function() {
           this.setToggle();
           if (this.likeToggle) {
@@ -72,6 +83,7 @@
             this.deleteMart();
           }
         },
+
         heartit: function (e) {
       const hearts = document.createElement('div');
       hearts.innerHTML = '<svg class="heart heart-pop one" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg><svg class="heart heart-pop two" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg><svg class="heart heart-pop three" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg><svg class="heart heart-pop four" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg><svg class="heart heart-pop five" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg><svg class="heart heart-pop six" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg><svg class="heart heart-pop seven" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg><svg class="heart heart-pop eight" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg><svg class="heart heart-pop nine" viewBox="0 0 32 29.6"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg>';
@@ -81,8 +93,10 @@
         e.target.removeChild(hearts);
       }, 3000);
     }
+
         //methods end here
       },
+
        mounted(){
   document.body.addEventListener('mousedown', function() {
     document.body.classList.add('using-mouse');
@@ -92,14 +106,17 @@
   });
  }
     }
+
+
   </script>
 
 <style>
+
   :focus {
   outline: #08f auto 2px;
 }
 body {
-  background-color: #f9c2c2;
+  background-color: #ffffff;
 }
 body.using-mouse :focus {
   outline: none;
@@ -202,4 +219,5 @@ body.using-mouse :focus {
     opacity: 0;
   }
 }
+
 </style>

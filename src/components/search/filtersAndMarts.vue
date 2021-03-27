@@ -336,7 +336,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   
   #starRatings {
     text-align: center;
