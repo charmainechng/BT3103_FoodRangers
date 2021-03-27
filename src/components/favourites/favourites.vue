@@ -27,6 +27,8 @@
                   </div>
                   <div id="starRatings">
                     <starRatings  v-bind:rating = "mart[1].ratings"></starRatings>
+                  </div>
+                  <div id="likeButton">
                     <like v-bind:mart="mart"></like>
                   </div> 
                 </div>
@@ -91,11 +93,24 @@ export default {
 }
 </script>
 
-<style>
+<style scoped="">
+
+  #result {
+    float:left;
+  }
     #numOfSearches {
       font-size: 25px;
       padding-right: 100px;
       float: right;
+    }
+
+    #result {
+      width: 1250px;
+    }
+
+    #likeButton {
+      padding: 50px;
+
     }
 
 </style>

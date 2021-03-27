@@ -197,7 +197,7 @@ export default {
     #martDetails {
       float: left;
       padding: 20px;
-      width: 625px;
+      width: 600px;
     }
 
 
@@ -206,7 +206,9 @@ export default {
     float: left;
     padding-top: 10px;
     font-size: 15px;
-    padding-left: 40px;
+    padding-left: 10px;
 
   }
+
+  
 </style>

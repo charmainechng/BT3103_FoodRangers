@@ -64,7 +64,7 @@
                 </div>
                 <div id="starRatings">
                   <starRatings  v-bind:rating = "mart[1].ratings"></starRatings>
-                  <like v-bind:mart="mart"></like>
+                  <like id="likeButton" v-bind:mart="mart"></like>
                 </div> 
               </div>
             </li>
@@ -341,8 +341,10 @@ export default {
   #starRatings {
     text-align: center;
     float:left;
-    font-size: 30px;
+    font-size: 25px;
 
   }
+
+
 </style>
 
