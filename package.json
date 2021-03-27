@@ -25,7 +25,6 @@
     "underscore-node": "^0.1.2",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.12",
-    "vue-currency-directive": "^1.5.3",
     "vue-ripple-directive": "^2.0.1",
     "vue-router": "^3.5.1",
     "vue-star": "0.0.4",

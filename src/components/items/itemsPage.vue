@@ -77,7 +77,6 @@ export default {
             let id = doc.id;
             let item_dict = doc.data();
             item_dict["numDaysLeft"] = days;
-            
             //if it does not expire within 3 days, consider it not expiring soon
             if (edate - tdydate > 3) {
               doc.data["numDaysLeft"] = days;
