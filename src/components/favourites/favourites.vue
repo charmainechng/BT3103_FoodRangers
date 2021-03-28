@@ -8,7 +8,7 @@
       <div>
         <div id="tab">
           <h1> Favourite marts </h1>
-          <a href="/search">Search</a>  
+          <router-link to="/search" exact id="search-tab"> Search </router-link>
           <p id="fav-tab"> Favourites </p>
         </div>
 
@@ -93,7 +93,7 @@ export default {
 }
 </script>
 
-<style scoped="">
+<style scoped>
 
   #result {
     float:left;
