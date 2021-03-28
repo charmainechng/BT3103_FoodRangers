@@ -79,7 +79,7 @@ body.using-mouse :focus {
 }
 
 #app {
-  padding: 50px;
+  padding: 0;
   text-align: center;
 
 }
