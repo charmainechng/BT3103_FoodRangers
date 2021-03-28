@@ -13,9 +13,9 @@
 
     <gmap-map
         :center="{lat:center.lat, lng:center.lng}"
-        :zoom="12.5"
+        :zoom="13"
         map-type-id="terrain"
-        style="width: 650px; height: 650px">
+        style="width: 1000px; height: 650px; margin: 0 auto; display: block">
 
     <gmap-marker
         :key="index"
@@ -34,7 +34,7 @@
     </gmap-info-window>
 
     </gmap-map>
-
+ 
 </div>
 </template>
 
@@ -120,6 +120,7 @@ export default {
                 </div>
                 <div class="content">
                     <p>${marker[2]}</p>
+                    <button> View Mart </button>
                 </div>`);
         },
     },

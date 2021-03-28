@@ -73,15 +73,15 @@
   :focus {
   outline: #08f auto 2px;
 }
-body {
-  background-color: #f9c2c2;
-}
+
 body.using-mouse :focus {
   outline: none;
 }
+
 #app {
   padding: 50px;
   text-align: center;
+
 }
 .heart {
   width: 20px;
