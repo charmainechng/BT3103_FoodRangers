@@ -2,11 +2,13 @@
 <div>
     <br>
     <h2> Shops Near Me </h2>
-    
-    <!--{{this.markers}}
+
+    <!--
+    {{this.markers}}
     <div :key="index" v-for="(m, index) in markers">
-        {{m[1]}}
-        </div> -->
+        {{m[0]}}
+        </div>
+    -->
 
     <p> 🗺 Please enable location services for the map to work. 🗺
         <br> ⏰ The map will take a few seconds to load. ⏰ </p>
@@ -20,7 +22,7 @@
     <gmap-marker
         :key="index"
         v-for="(m, index) in markers"
-        :position="m[1]"
+        :position="m[2]"
         @click="toggleInfoWindow(m,index)">
     </gmap-marker>
 
@@ -94,14 +96,14 @@ export default {
             let marker = {}
             querySnapShot.forEach(doc=>{
                 let entry = doc.data();
-                marker = [entry.name, entry.position, entry.type]
+                marker = [doc.id, entry.name, entry.position, entry.type]
                 this.markers.push(marker)
             })
         })   
     },
 
     toggleInfoWindow: function (marker, idx) {
-        this.infoWindowPos = marker[1];
+        this.infoWindowPos = marker[2];
         this.infoContent = this.getInfoWindowContent(marker);
 
         if (this.currentMidx == idx) {
@@ -116,13 +118,13 @@ export default {
 
     getInfoWindowContent: function (marker) {
         return (`<div>
-                    <p>${marker[0]}</p>
+                    <a href="mart/${marker[0]}">${marker[1]}</a>
                 </div>
                 <div class="content">
-                    <p>${marker[2]}</p>
-                    <button> View Mart </button>
+                    <p>${marker[3]}</p>
                 </div>`);
-        },
+    },
+
     },
 
     created() {

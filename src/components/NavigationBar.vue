@@ -19,7 +19,6 @@
 </script>
 
 <style scoped>
-
 /* Add a black background color to the top navigation */
 .topnav {
   display: flex;

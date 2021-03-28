@@ -5,15 +5,16 @@
    
     </nav>
 
-      <div>
+      <div id="main">
         <div id="tab">
+          <br>
           <h1> Favourite marts </h1>
           <router-link to="/search" exact id="search-tab"> Search </router-link>
           <p id="fav-tab"> Favourites </p>
         </div>
 
         <div id="result"> 
-          <h1 id="numOfSearches"> {{filtersCount}} searches found </h1>
+          <h1 id="numOfSearches"> <br> {{filtersCount}} searches found </h1>
           <div class="mart">
           
             <ul>
@@ -94,10 +95,42 @@ export default {
 </script>
 
 <style scoped>
+  #tab {
+    width: 100%;
+    height: 70px;
+    font-size: 30px;
+    font-weight: bold;
+    }
+
+    #search-tab {
+    float: left;
+    width: 50%;
+    background-color: white;
+    color: #2c3e50;
+    text-align: center;
+
+    }
+
+    #fav-tab {
+    border-width: 100px;
+    width: 50%;
+    border-color: white;
+    text-align: center;
+    background-color: #2c3e50;
+    color: white;
+    float: left;
+  }
+
+      #main {
+      padding-left: 50px;
+      padding-right: 50px;
+      position: sticky;
+    }
 
   #result {
-    float:left;
+    margin: 0 auto; display: block;
   }
+
     #numOfSearches {
       font-size: 25px;
       padding-right: 100px;

@@ -50,7 +50,7 @@
 
       </div>
       <div id="result"> 
-        <h1 id="numOfSearches"> {{filtersCount}} searches found </h1>
+        <h1 id="numOfSearches"> <br> {{filtersCount}} searches found </h1>
         <div class="mart">
           
           <ul>
@@ -343,6 +343,19 @@ export default {
     float:left;
     font-size: 25px;
 
+  }
+
+  
+  #ratings {
+    float: right;
+  }
+
+  #type {
+    float: right;
+  }
+
+  #loc-div {
+    float: right;
   }
 
 

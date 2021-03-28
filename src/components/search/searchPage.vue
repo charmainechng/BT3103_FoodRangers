@@ -5,6 +5,7 @@
       
 
       <div id="tab">
+        <br>
         <h1> Marts in Singapore </h1>
         <p id="search-tab">Search</p>  
         <router-link to="/favourites" exact id="fav-tab"> Favourites </router-link>
@@ -38,7 +39,6 @@ export default {
 </script>
 
 <style>
-
    ul {
     list-style-type: none;
     margin: 0; 
@@ -47,34 +47,28 @@ export default {
 
 
   #main {
-
      padding-left: 100px;
-     
-    
   }
 
   
   #tab {
-    width: 1250px;
+    width: 100%;
     height: 70px;
-    font-size: 50px;
+    font-size: 30px;
     font-weight: bold;
-    
     }
 
-    #search-tab {
-
+  #search-tab {
     float: left;
-    width: 600px;
+    width: 50%;
     background-color: #2c3e50;
     color: white;
     text-align: center;
-
     }
 
     #fav-tab {
     border-width: 100px;
-    width: 600px;
+    width: 50%;
     border-color: white;
     text-align: center;
     background-color: white;
@@ -99,7 +93,7 @@ export default {
     overflow: hidden;
     
     width: 1250px;
-    height: 200px;
+    height: 220px;
   
     background-color: lightgray;
     }
@@ -168,12 +162,13 @@ export default {
 
     #main {
       padding-left: 50px;
+      padding-right: 50px;
       position: sticky;
     }
 
     #filters {
       height: 100px;
-      width: 1250px;
+      width: 100%;
       background-color: #f1f1f1;
       float: left;
     }
@@ -192,6 +187,8 @@ export default {
 
     #result {
       width: 1250px;
+      margin: 0 auto;
+      display: block;
     }
 
 
@@ -211,6 +208,7 @@ export default {
     padding-left: 10px;
 
   }
+
 
   
 </style>
