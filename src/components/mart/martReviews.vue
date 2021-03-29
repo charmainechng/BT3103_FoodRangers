@@ -11,8 +11,8 @@
     -->
     <div>
     <ul>
-        <li v-for="review in this.reviews" :key="review.id">
-            {{review}}
+        <li v-for="(key, value) in this.reviews" :key="key">
+            {{value}}
         </li>
     </ul>
     </div>
@@ -37,7 +37,7 @@ export default {
             let review = []
             querySnapShot.forEach(doc=>{
                 let entry = doc.data();
-                review = [doc.id, entry.reviews]
+                review = [entry.reviews]
                 this.reviews.push(review)
             })
         })   
