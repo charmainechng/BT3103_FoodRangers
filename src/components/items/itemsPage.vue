@@ -6,7 +6,13 @@
     <div class="vertical-align">
       <div class="items scroll">
         <h1>All Items</h1>
-
+        <button
+          class="button btn btn-info btn-lg"
+          data-toggle="modal"
+          data-target="#myModal"
+        >
+          +
+        </button>
         <addItem></addItem>
 
         <ul>
@@ -167,7 +173,7 @@ export default {
 <style scoped>
 .btn {
   border-radius: 30px;
-  /* right: 100px; */
+  right: 100px;
   float: right;
   border: none;
   color: black;
