@@ -2,7 +2,7 @@
   <div>
     <Bar></Bar>
     <nav>
-      <img v-bind:src="mart.image">
+      <img v-bind:src="this.mart.image">
       <div class="mart">
         <p>{{this.mart.name}} </p>
         {{this.mart.address}} <br>
@@ -15,14 +15,27 @@
       </ul>
     </nav>
     <div id="content">
-      <p id="rating">Green Rating: <span v-text="this.mart.ratings"></span></p>
-      <h4>Categories</h4>
+      <p id="rating">Green Rating: 
+        <span v-text="this.mart.ratings"></span>
+        <starRating
+          :rating="this.mart.ratings"
+          :read-only="true"
+          :increment="0.1"
+          :show-rating="false"
+          :fixed-points="1"
+          inactive-color="#000000"
+          id="ratingsStar"
+        ></starRating>
+      </p>
+      <salesItems></salesItems>
     </div>
   </div>
 </template>
 
 <script>
 import db from "../../firebase.js";
+import salesItems from "./salesItems";
+import StarRating from "vue-star-rating";
 export default {
   data() {
     return {
@@ -34,18 +47,19 @@ export default {
       type: String,
     }
   },
+  components: {
+    salesItems: salesItems,
+    StarRating,
+  },
   methods: {
     fetchItems: function() {
       db.collection('marts').doc(this.id).get().then(snapshot => { 
         this.mart = snapshot.data();
       });
     },
-    getImage: function() {
-      return this.mart.image;
-    }
   },
   created() {
-    this.fetchItems()
+    this.fetchItems();
   },
 };
 </script>
@@ -54,8 +68,7 @@ export default {
 nav {
   float: left;
   width: 25%;
-  background: #a2c5c2d2;
-  /* padding-right: 20px; */
+  background: #ffff;
   height: 100vh;
   padding: 10px;
 }
@@ -101,4 +114,9 @@ span {
 #rating {
   float: right;
 }
+#ratingsStar {
+  display: inline-block;
+  
+}
+
 </style>
