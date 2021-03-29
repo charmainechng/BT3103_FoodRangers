@@ -17,7 +17,7 @@
 
         <ul>
           <li v-for="item in this.items" :key="item.id">
-            <div id="list">
+            <div id="list-items">
               <img v-bind:src="item[1].img" id="itemImg" />
               <div id="itemDetails">
                 <p>
@@ -35,12 +35,50 @@
         </ul>
       </div>
 
-      <div class="expiring-soon">
+      <div class="expiring-soon scroll">
         <h1>Expiring Soon</h1>
+        <div class="vertical-align">
+          <ul>
+            <li v-for="item in this.expiring" :key="item.id">
+              <div id="list-expiring">
+                <img v-bind:src="item[1].img" id="itemImg" />
+                <div id="itemDetails">
+                  <p>
+                    <b>{{ item[1].name }} </b>
+                  </p>
+                  <p>State: {{ item[1].state }}</p>
+                  <p>Expiry Date: {{ item[1].expiry }}</p>
+                  <h3>
+                    <b>{{ item[1].numDaysLeft }}</b> more days
+                  </h3>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <div class="expired">
+      <div class="expired scroll">
         <h1>Expired</h1>
+        <div class="vertical-align">
+          <ul>
+            <li v-for="item in this.expired" :key="item.id">
+              <div id="list-expired">
+                <img v-bind:src="item[1].img" id="itemImg" />
+                <div id="itemDetails">
+                  <p>
+                    <b>{{ item[1].name }} </b>
+                  </p>
+                  <p>State: {{ item[1].state }}</p>
+                  <p>Expiry Date: {{ item[1].expiry }}</p>
+                  <h3>
+                    <b>{{ item[1].numDaysLeft }}</b> more days
+                  </h3>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -74,20 +112,34 @@ export default {
             var edate = moment(doc.data().expiry, "DD-MM-YYYY");
             var tdydate = moment();
             var days = edate.diff(tdydate, "days");
+            
+            // if (edate.isAfter(tdydate)) {
+            //   days = edate.diff(tdydate, "days");
+            // } else if (tdydate.isSameOrAfter(edate)) {
+            //   days = tdydate.diff(edate, "days");
+            // }
+
             let id = doc.id;
             let item_dict = doc.data();
             item_dict["numDaysLeft"] = days;
 
             //if it does not expire within 3 days, consider it not expiring soon
-            if (edate - tdydate > 3) {
+            if (days > 5) {
+              
               doc.data["numDaysLeft"] = days;
               this.items.push([id, item_dict]);
               // expires in <=3 days
-            } else if (edate - tdydate <= 3) {
-              this.items.push([id, item_dict]);
+            } else if (days <0)   {
+              alert(days)
+               doc.data["numDaysLeft"] = days;
+              this.expired.push([id, item_dict]);
               // expired already
-            } else if (edate < tdydate) {
-              this.items.push([id, item_dict]);
+            } else if (days <=5) {
+               
+              this.expiring.push([id, item_dict]);
+            } else {
+              
+              this.expiring.push([id, item_dict]);
             }
           });
         });
@@ -162,8 +214,28 @@ h3 {
   float: right;
 }
 
-#list {
+#list-items {
   background: rgba(180, 212, 180, 0.911);
+  border-radius: 50px;
+  display: flex;
+  width: auto;
+  height: auto;
+  border: 1.8px solid rgb(3, 3, 3);
+  overflow: hidden;
+}
+
+#list-expiring {
+  background: rgba(216, 216, 193, 0.911);
+  border-radius: 50px;
+  display: flex;
+  width: auto;
+  height: auto;
+  border: 1.8px solid rgb(3, 3, 3);
+  overflow: hidden;
+}
+
+#list-expired {
+  background: rgba(216, 216, 193, 0.911);
   border-radius: 50px;
   display: flex;
   width: auto;
