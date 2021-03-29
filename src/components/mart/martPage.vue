@@ -13,6 +13,7 @@
           {{value}}
         </li>
       </ul>
+      <martReviews id="reviews"> </martReviews>
     </nav>
     <div id="content">
       <p id="rating">Green Rating: 
@@ -36,6 +37,8 @@
 import db from "../../firebase.js";
 import salesItems from "./salesItems";
 import StarRating from "vue-star-rating";
+import martReviews from './martReviews.vue'
+
 export default {
   data() {
     return {
@@ -50,6 +53,7 @@ export default {
   components: {
     salesItems: salesItems,
     StarRating,
+    martReviews
   },
   methods: {
     fetchItems: function() {
@@ -65,6 +69,13 @@ export default {
 </script>
 
 <style scoped>
+#reviews {
+  margin-left: 40px;
+  margin-right: 40px;
+  border-top: 1px solid black;
+  text-align: left;
+}
+
 nav {
   float: left;
   width: 25%;
