@@ -17,8 +17,15 @@
 
         <ul>
           <li v-for="item in this.items" :key="item.id">
-            <div id="list">
+            <div id="list-items">
               <img v-bind:src="item[1].img" id="itemImg" />
+              <button
+                class="btn"
+                v-bind:id="item[0]"
+                v-on:click="deleteItem($event)"
+              >
+                <i class="fa fa-trash fa-3x"></i>
+              </button>
               <div id="itemDetails">
                 <p>
                   <b>{{ item[1].name }} </b>
@@ -35,12 +42,59 @@
         </ul>
       </div>
 
-      <div class="expiring-soon">
+      <div class="expiring-soon scroll">
         <h1>Expiring Soon</h1>
+        <div class="vertical-align">
+          <ul>
+            <li v-for="item in this.expiring" :key="item.id">
+              <button
+                class="btn"
+                v-bind:id="item[0]"
+                v-on:click="deleteItem($event)"
+              >
+                <i class="fa fa-trash fa-3x"></i>
+              </button>
+              <div id="list-expiring">
+                <img v-bind:src="item[1].img" id="itemImg" />
+                
+                <div id="itemDetails">
+                  <p>
+                    <b>{{ item[1].name }} </b>
+                  </p>
+                  <p>State: {{ item[1].state }}</p>
+                  <p>Expiry Date: {{ item[1].expiry }}</p>
+                  <h3>
+                    <b>{{ item[1].numDaysLeft }}</b> more days
+                  </h3>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <div class="expired">
+      <div class="expired scroll">
         <h1>Expired</h1>
+        <div class="vertical-align">
+          <ul>
+            <li v-for="item in this.expired" :key="item.id">
+              <div id="list-expired">
+                <img v-bind:src="item[1].img" id="itemImg" />
+
+                <div id="itemDetails">
+                  <p>
+                    <b>{{ item[1].name }} </b>
+                  </p>
+                  <p>State: {{ item[1].state }}</p>
+                  <p>Expiry Date: {{ item[1].expiry }}</p>
+                  <h3>
+                    <b>{{ item[1].numDaysLeft }}</b> more days
+                  </h3>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -65,6 +119,15 @@ export default {
     addItem,
   },
   methods: {
+    deleteItem: function (event) {
+      let doc_id = event.target.getAttribute("id");
+      db.collection("items")
+        .doc(doc_id)
+        .delete()
+        .then(() => {
+          location.reload();
+        });
+    },
     fetchItems: function () {
       db.collection("items")
         .get()
@@ -74,19 +137,27 @@ export default {
             var edate = moment(doc.data().expiry, "DD-MM-YYYY");
             var tdydate = moment();
             var days = edate.diff(tdydate, "days");
+
+            // if (edate.isAfter(tdydate)) {
+            //   days = edate.diff(tdydate, "days");
+            // } else if (tdydate.isSameOrAfter(edate)) {
+            //   days = tdydate.diff(edate, "days");
+            // }
             let id = doc.id;
             let item_dict = doc.data();
             item_dict["numDaysLeft"] = days;
-
             //if it does not expire within 3 days, consider it not expiring soon
-            if (edate - tdydate > 3) {
+            if (days > 5) {
               doc.data["numDaysLeft"] = days;
               this.items.push([id, item_dict]);
               // expires in <=3 days
-            } else if (edate - tdydate <= 3) {
-              this.items.push([id, item_dict]);
+            } else if (days < 0) {
+              doc.data["numDaysLeft"] = days;
+              this.expired.push([id, item_dict]);
               // expired already
-            } else if (edate < tdydate) {
+            } else if (days <= 5) {
+              this.expiring.push([id, item_dict]);
+            } else {
               this.items.push([id, item_dict]);
             }
           });
@@ -100,6 +171,18 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+  border-radius: 30px;
+  right: 100px;
+  float: right;
+  border: none;
+  color: black;
+  background-color: #ebf0eba9;
+}
+
+.btn:hover {
+  background-color: rgb(90, 83, 83);
+}
 .scroll {
   margin: 4px, 4px;
   padding: 4px;
@@ -115,6 +198,7 @@ ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   flex-grow: 1;
   flex-basis: 300px;
@@ -162,8 +246,28 @@ h3 {
   float: right;
 }
 
-#list {
+#list-items {
   background: rgba(180, 212, 180, 0.911);
+  border-radius: 50px;
+  display: flex;
+  width: auto;
+  height: auto;
+  border: 1.8px solid rgb(3, 3, 3);
+  overflow: hidden;
+}
+
+#list-expiring {
+  background: rgba(250, 236, 173, 0.911);
+  border-radius: 50px;
+  display: flex;
+  width: auto;
+  height: auto;
+  border: 1.8px solid rgb(3, 3, 3);
+  overflow: hidden;
+}
+
+#list-expired {
+  background: rgba(236, 184, 184, 0.911);
   border-radius: 50px;
   display: flex;
   width: auto;
@@ -193,7 +297,7 @@ h3 {
 
 .items {
   width: 45%;
-  height: 129%;
+  height: 200%;
   position: absolute;
   display: flex;
   background: #2e976bcb;
@@ -206,8 +310,8 @@ h3 {
   flex-direction: column;
 }
 .expiring-soon {
-  width: 40%;
-  height: 60%;
+  width: 45%;
+  height: 67%;
   position: absolute;
   background: #f3ae53ab;
   margin-top: 30px;
@@ -218,10 +322,11 @@ h3 {
   align-items: center;
   /* justify-content: center; */
   flex-direction: column;
+  position: absolute;
 }
 .expired {
-  width: 40%;
-  height: 60%;
+  width: 45%;
+  height: 130%;
   position: absolute;
   background: #972e2eab;
   right: 50px;

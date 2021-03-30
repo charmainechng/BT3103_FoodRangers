@@ -38,30 +38,25 @@
 
             <select v-model="category">
               <option value="meat">Meat</option>
-              <option value="diary">Diary</option>
-              <option value="biscuit">Biscuit</option>
-              <option value="drink">Drinks</option>
+              <option value="dairy">Dairy</option>
+              <option value="fish">Fish</option>
+              <option value="poultry">Poultry</option>
               <option value="vegetable">Vegetable</option>
+              <option value="fruit">Fruit</option>
             </select>
 
-            <label for="text"><b> State: </b></label>
-
+            <label for="text"> <b>Is the product new?</b></label>
             <select v-model="state">
-              <option value="opened">Opened</option>
-              <option value="unopened">Unopened</option>
-            </select>
-            <label for="text"> <b>Perishable?</b></label>
-            <select v-model="perishable">
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+              <option value="Opened">Opened</option>
+              <option value="Unopened">Unopened</option>
             </select>
 
-            <p v-if="perishable == 'yes'">
+            <p v-if="state == 'Opened'">
               <label for="text">
-                <b>Predicted Expiry Date: </b> {{ this.getPredDate() }}
+                <b>Predicted Expiry Date: </b> {{ this.getPredDate().format("DD-MM-YYYY") }}
               </label>
             </p>
-            <p v-if="perishable == 'no'">
+            <p v-if="state == 'Unopened'">
               <label><b>Expiry Date: </b></label>
               <input type="date" v-model="expirydate" />
             </p>
@@ -97,7 +92,8 @@ export default {
       img: null,
       category: "",
       state: "",
-      perishable: "",
+      url: "",
+
       expirydate: "",
       money: "",
       numDay: 0,
@@ -110,8 +106,9 @@ export default {
       this.dict["category"] = this.category;
       this.dict["state"] = this.state;
       this.dict["expiry"] = moment(this.expirydate).format("DD-MM-YYYY");
-      this.dict["img"] = this.img;
+      this.dict["img"] = this.url;
       this.dict["saved"] = this.money;
+   
 
       db.collection("items")
         .add(this.dict)
@@ -119,6 +116,8 @@ export default {
           location.reload();
         });
     },
+
+
 
     getPredDate() {
       var chosenCat = this.category;
@@ -131,7 +130,8 @@ export default {
           });
         });
       // alert(this.numDay);
-      this.expirydate = moment().add(this.numDay, "days").format("DD-MM-YYYY");
+      
+      this.expirydate = moment().add(this.numDay, "days");
       return this.expirydate;
     },
 
@@ -142,9 +142,17 @@ export default {
     previewImage(e) {
       const file = e.target.files[0];
       this.img = URL.createObjectURL(file);
-      
+      db.storage().ref('images/'+ file.name).put(file)
+      .then(response => {
+        response.ref.getDownloadURL().then((downloadURL) => {
+           this.url = downloadURL;
+           alert(downloadURL)
+      })})          
+     .catch(err => console.log(err))
     },
-  },
+    }
+
+
 };
 </script>
 
