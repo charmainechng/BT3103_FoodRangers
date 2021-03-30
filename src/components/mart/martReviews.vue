@@ -11,8 +11,10 @@
     -->
     <div>
     <ul>
-        <li v-for="(key, value) in this.reviews" :key="key">
+        <li v-for="(key, value) in this.mart.reviews" :key="key">
             {{value}}
+            <br>
+            {{key}}
         </li>
     </ul>
     </div>
@@ -27,21 +29,22 @@ export default {
 
     data() {
         return {
-            reviews: [],
+            mart: [],
+        }
+    },
+
+    props: {
+        id: {
+            type: String
         }
     },
 
     methods: {
-    getReviews: function() {
-        db.collection('marts').get().then((querySnapShot)=>{
-            let review = []
-            querySnapShot.forEach(doc=>{
-                let entry = doc.data();
-                review = [entry.reviews]
-                this.reviews.push(review)
-            })
-        })   
-    },
+        getReviews: function() {
+            db.collection('marts').doc(this.id).get().then(snapshot => { 
+            this.mart = snapshot.data();
+            });
+        },
     },
 
     created() {
@@ -51,5 +54,7 @@ export default {
 </script>
 
 <style scoped>
-
+li {
+    margin: 20px; 
+}
 </style>

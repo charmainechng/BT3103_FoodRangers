@@ -13,7 +13,7 @@
           {{value}}
         </li>
       </ul>
-      <martReviews id="reviewCSS"> </martReviews>
+      <martReviews v-bind:id="this.id" class="reviewCSS"> </martReviews>
     </nav>
     <div id="content">
       <p id="rating">Green Rating: 
@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style scoped>
-#reviewCSS {
+.reviewCSS {
   margin-left: 40px;
   margin-right: 40px;
   border-top: 1px solid black;
