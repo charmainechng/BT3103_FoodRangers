@@ -99,7 +99,6 @@ export default {
       dict: {},
       foodname: "",
       img: null,
-      imgurl:'',
       category: "",
       state: "",
       expirydate: "",
@@ -114,7 +113,7 @@ export default {
       this.dict["category"] = this.category;
       this.dict["state"] = this.state;
       this.dict["expiry"] = moment(this.expirydate).format("DD-MM-YYYY");
-      this.dict["img"] = this.imgurl;
+      this.dict["img"] = this.img;
       this.dict["saved"] = this.money;
       db.collection("items")
         .add(this.dict)
@@ -149,7 +148,7 @@ export default {
     previewImage(e) {
       const file = e.target.files[0];
       this.img = URL.createObjectURL(file);
-      this.imgurl = URL.createObjectURL(file);
+    
     },
   },
 };
